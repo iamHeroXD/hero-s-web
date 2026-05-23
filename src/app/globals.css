@@ -1,0 +1,388 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --xp-blue: #0A246A;
+  --xp-blue-mid: #3A6EA5;
+  --xp-blue-light: #4A90D9;
+  --xp-taskbar: #245EDC;
+  --xp-window-bg: #ECE9D8;
+  --xp-silver: #D4D0C8;
+  --cyber-neon: #00FF41;
+  --cyber-blue: #00D4FF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* XP-style scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #d4d0c8;
+  border: 1px solid #a0a0a0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #d4d0c8, #a8a8a8);
+  border: 1px solid #808080;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to right, #b8b8b8, #909090);
+}
+
+::-webkit-scrollbar-corner {
+  background: #d4d0c8;
+}
+
+/* CRT Effect */
+.crt-overlay::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.05) 2px,
+    rgba(0, 0, 0, 0.05) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.crt-overlay::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* XP Window Styles */
+.xp-window-titlebar {
+  background: linear-gradient(to bottom, #0A246A 0%, #3A6EA5 100%);
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 6px 6px 0 0;
+}
+
+.xp-window-titlebar-inactive {
+  background: linear-gradient(to bottom, #7a96df 0%, #5a82c0 100%);
+}
+
+.xp-btn-close {
+  background: linear-gradient(to bottom, #f9a9a9, #e00000);
+  border: 1px solid #8b0000;
+  width: 21px;
+  height: 21px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+}
+
+.xp-btn-minimize {
+  background: linear-gradient(to bottom, #f9f9a9, #b8b800);
+  border: 1px solid #8b8b00;
+  width: 21px;
+  height: 21px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  color: #333;
+}
+
+.xp-btn-maximize {
+  background: linear-gradient(to bottom, #a9f9a9, #00b800);
+  border: 1px solid #008b00;
+  width: 21px;
+  height: 21px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  color: white;
+}
+
+/* Neon glow text */
+.neon-text-green {
+  color: #00FF41;
+  text-shadow: 0 0 5px #00FF41, 0 0 10px #00FF41, 0 0 20px #00FF41;
+}
+
+.neon-text-blue {
+  color: #00D4FF;
+  text-shadow: 0 0 5px #00D4FF, 0 0 10px #00D4FF, 0 0 20px #00D4FF;
+}
+
+.neon-text-purple {
+  color: #7B2FFF;
+  text-shadow: 0 0 5px #7B2FFF, 0 0 10px #7B2FFF, 0 0 20px #7B2FFF;
+}
+
+/* Glass effect */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Terminal cursor */
+.terminal-cursor::after {
+  content: "█";
+  animation: cursorBlink 1s step-end infinite;
+}
+
+/* Pixel border */
+.pixel-border {
+  image-rendering: pixelated;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #808080 #808080 #ffffff;
+}
+
+/* XP inset border */
+.xp-inset {
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+/* XP raised border */
+.xp-raised {
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+}
+
+/* Start button gradient */
+.start-btn-gradient {
+  background: linear-gradient(to bottom, #4fc748 0%, #1e7a1e 50%, #1e7a1e 100%);
+}
+
+/* Custom checkbox */
+.xp-checkbox {
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border: 1px solid #7f9db9;
+  background: white;
+  cursor: pointer;
+  position: relative;
+}
+
+.xp-checkbox:checked::after {
+  content: "✓";
+  position: absolute;
+  top: -2px;
+  left: 1px;
+  font-size: 12px;
+  color: #000;
+}
+
+/* Glitch animation */
+@keyframes glitch-1 {
+  0% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 2px); }
+  50% { clip-path: inset(80% 0 0% 0); transform: translate(2px, -2px); }
+  100% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 2px); }
+}
+
+@keyframes glitch-2 {
+  0% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -2px); color: #ff0000; }
+  50% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 2px); color: #00ffff; }
+  100% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -2px); color: #ff0000; }
+}
+
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: glitch-1 3s infinite;
+  color: #ff0000;
+  opacity: 0.7;
+}
+
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: glitch-2 3s infinite;
+  color: #00ffff;
+  opacity: 0.7;
+}
+
+/* Desktop rain */
+.rain-drop {
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.6));
+  animation: rainFall 0.8s linear infinite;
+}
+
+/* Scan line */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: scanLine 8s linear infinite;
+  pointer-events: none;
+}
+
+/* XP taskbar button */
+.taskbar-btn {
+  background: linear-gradient(to bottom, #4183c4 0%, #2a65a8 100%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  padding: 2px 8px;
+  color: white;
+  font-size: 11px;
+  font-family: Tahoma, sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 120px;
+  max-width: 160px;
+}
+
+.taskbar-btn:hover {
+  background: linear-gradient(to bottom, #5193d4 0%, #3a75b8 100%);
+}
+
+.taskbar-btn.active {
+  background: linear-gradient(to bottom, #2a65a8 0%, #4183c4 100%);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* XP Input style */
+.xp-input {
+  background: white;
+  border: 2px solid;
+  border-color: #7f9db9 #d4d0c8 #d4d0c8 #7f9db9;
+  padding: 3px 6px;
+  font-family: Tahoma, sans-serif;
+  font-size: 12px;
+  outline: none;
+  width: 100%;
+}
+
+.xp-input:focus {
+  border-color: #3169C6 #d4d0c8 #d4d0c8 #3169C6;
+}
+
+/* Skill bar animation */
+.skill-bar-fill {
+  transition: width 1s ease-in-out;
+}
+
+/* Draggable cursor */
+.dragging {
+  cursor: grabbing !important;
+}
+
+/* XP button */
+.xp-button {
+  background: linear-gradient(to bottom, #f5f4ea 0%, #e0ddd5 50%, #d4d0c8 100%);
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 3px 12px;
+  font-family: Tahoma, Verdana, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  min-width: 75px;
+  text-align: center;
+  color: black;
+}
+
+.xp-button:hover {
+  background: linear-gradient(to bottom, #f9f8ee 0%, #e8e5dd 50%, #dcd8d0 100%);
+}
+
+.xp-button:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  background: linear-gradient(to bottom, #d4d0c8 0%, #e0ddd5 100%);
+}
+
+/* Focus glow */
+.window-focused {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.3), 0 8px 32px rgba(0,0,0,0.5);
+}
+
+/* Wobble on open */
+@keyframes windowOpen {
+  0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+  60% { transform: scale(1.02) translateY(-2px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.window-open-anim {
+  animation: windowOpen 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* BSOD */
+.bsod {
+  background: #0000aa;
+  color: white;
+  font-family: "Courier New", monospace;
+}
+
+/* Matrix canvas */
+.matrix-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  pointer-events: none;
+}

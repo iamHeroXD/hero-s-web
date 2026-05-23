@@ -1,0 +1,170 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  darkMode: ["class"],
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        mono: ["'Courier New'", "Courier", "monospace"],
+        pixel: ["'Press Start 2P'", "monospace"],
+        system: ["Tahoma", "Verdana", "sans-serif"],
+      },
+      colors: {
+        xp: {
+          blue: "#0A246A",
+          "blue-mid": "#3A6EA5",
+          "blue-light": "#4A90D9",
+          teal: "#00827F",
+          green: "#00A82C",
+          "title-start": "#0A246A",
+          "title-end": "#3A6EA5",
+          taskbar: "#245EDC",
+          "taskbar-dark": "#0A246A",
+          "taskbar-shine": "#4A90D9",
+          "btn-start": "#5cb85c",
+          "btn-hover": "#4cae4c",
+          "window-border": "#0A246A",
+          "window-bg": "#ECE9D8",
+          gray: "#808080",
+          silver: "#D4D0C8",
+        },
+        cyber: {
+          neon: "#00FF41",
+          blue: "#00D4FF",
+          purple: "#7B2FFF",
+          pink: "#FF006E",
+          orange: "#FF8C00",
+          yellow: "#FFE500",
+        },
+      },
+      animation: {
+        "boot-blink": "bootBlink 1s step-end infinite",
+        "scan-line": "scanLine 8s linear infinite",
+        "crt-flicker": "crtFlicker 0.15s infinite",
+        "matrix-fall": "matrixFall 2s linear infinite",
+        "glitch": "glitch 2.5s infinite",
+        "typing": "typing 2s steps(20) forwards",
+        "cursor-blink": "cursorBlink 1s step-end infinite",
+        "float": "float 6s ease-in-out infinite",
+        "glow-pulse": "glowPulse 2s ease-in-out infinite",
+        "slide-in": "slideIn 0.3s ease-out",
+        "boot-progress": "bootProgress 3s ease-in-out forwards",
+        "rain-fall": "rainFall 0.8s linear infinite",
+        "spin-slow": "spin 8s linear infinite",
+        "equalizer-1": "equalizerBar1 0.8s ease-in-out infinite alternate",
+        "equalizer-2": "equalizerBar2 0.6s ease-in-out infinite alternate",
+        "equalizer-3": "equalizerBar3 0.9s ease-in-out infinite alternate",
+        "equalizer-4": "equalizerBar4 0.7s ease-in-out infinite alternate",
+      },
+      keyframes: {
+        bootBlink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
+        scanLine: {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100vh)" },
+        },
+        crtFlicker: {
+          "0%": { opacity: "0.97" },
+          "5%": { opacity: "0.95" },
+          "10%": { opacity: "0.9" },
+          "15%": { opacity: "0.95" },
+          "20%": { opacity: "0.98" },
+          "50%": { opacity: "0.94" },
+          "80%": { opacity: "0.98" },
+          "100%": { opacity: "0.96" },
+        },
+        matrixFall: {
+          "0%": { transform: "translateY(-100%)", opacity: "1" },
+          "100%": { transform: "translateY(100vh)", opacity: "0" },
+        },
+        glitch: {
+          "0%": { transform: "none", opacity: "1" },
+          "7%": { transform: "skew(-0.5deg, -0.9deg)", opacity: "0.75" },
+          "10%": { transform: "none", opacity: "1" },
+          "27%": { transform: "none", opacity: "1" },
+          "30%": { transform: "skew(0.8deg, -0.1deg)", opacity: "0.75" },
+          "35%": { transform: "none", opacity: "1" },
+          "52%": { transform: "none", opacity: "1" },
+          "55%": { transform: "skew(-1deg, 0.2deg)", opacity: "0.75" },
+          "60%": { transform: "none", opacity: "1" },
+          "72%": { transform: "none", opacity: "1" },
+          "75%": { transform: "skew(0.4deg, 1deg)", opacity: "0.75" },
+          "80%": { transform: "none", opacity: "1" },
+          "100%": { transform: "none", opacity: "1" },
+        },
+        typing: {
+          "0%": { width: "0" },
+          "100%": { width: "100%" },
+        },
+        cursorBlink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        glowPulse: {
+          "0%, 100%": { boxShadow: "0 0 5px #00D4FF, 0 0 10px #00D4FF" },
+          "50%": { boxShadow: "0 0 20px #00D4FF, 0 0 40px #00D4FF, 0 0 60px #00D4FF" },
+        },
+        slideIn: {
+          "0%": { transform: "translateY(-20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        bootProgress: {
+          "0%": { width: "0%" },
+          "100%": { width: "100%" },
+        },
+        rainFall: {
+          "0%": { transform: "translateY(-100px)", opacity: "0" },
+          "10%": { opacity: "0.7" },
+          "90%": { opacity: "0.7" },
+          "100%": { transform: "translateY(100vh)", opacity: "0" },
+        },
+        equalizerBar1: {
+          "0%": { height: "20%" },
+          "100%": { height: "80%" },
+        },
+        equalizerBar2: {
+          "0%": { height: "50%" },
+          "100%": { height: "100%" },
+        },
+        equalizerBar3: {
+          "0%": { height: "30%" },
+          "100%": { height: "70%" },
+        },
+        equalizerBar4: {
+          "0%": { height: "60%" },
+          "100%": { height: "90%" },
+        },
+      },
+      backgroundImage: {
+        "xp-title": "linear-gradient(to bottom, #0A246A, #3A6EA5)",
+        "xp-taskbar": "linear-gradient(to bottom, #245EDC, #0A246A)",
+        "xp-button": "linear-gradient(to bottom, #FFFFFF, #C8C8C8)",
+        "cyber-grid": "linear-gradient(rgba(0,212,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.1) 1px, transparent 1px)",
+        "xp-desktop": "linear-gradient(180deg, #1a6bb5 0%, #3c9cdb 40%, #7ec8e3 70%, #c5e8f7 100%)",
+        "xp-window": "linear-gradient(to bottom, #ECE9D8 0%, #ECE9D8 100%)",
+        "start-btn": "linear-gradient(to bottom, #3eae45 0%, #1e7e22 100%)",
+      },
+      boxShadow: {
+        "xp-window": "3px 3px 10px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.3)",
+        "xp-title": "0 2px 4px rgba(0,0,0,0.3)",
+        "cyber-glow": "0 0 10px #00D4FF, 0 0 20px #00D4FF",
+        "neon-green": "0 0 10px #00FF41, 0 0 20px #00FF41",
+        "neon-pink": "0 0 10px #FF006E, 0 0 20px #FF006E",
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
