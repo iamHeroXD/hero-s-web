@@ -30,8 +30,9 @@ export default function BootSequence({ onComplete }: Props) {
     let i = 0;
     const interval = setInterval(() => {
       if (i < BOOT_MESSAGES.length) {
-        setBiosLines((prev) => [...prev, BOOT_MESSAGES[i]]);
+        const msg = BOOT_MESSAGES[i];
         i++;
+        setBiosLines((prev) => [...prev, msg]);
       } else {
         clearInterval(interval);
         setTimeout(() => setPressEnter(true), 500);
@@ -103,23 +104,23 @@ export default function BootSequence({ onComplete }: Props) {
               HERO.X BIOS v1.337 — Copyright © 2024 Hero.X Systems Inc.
             </div>
             <div className="space-y-1">
-              {biosLines.map((line, i) => (
+              {biosLines.filter((l): l is string => typeof l === "string").map((line, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.1 }}
                   className={
-                    line.includes("OK") || line.includes("DONE")
+                    line?.includes("OK") || line?.includes("DONE")
                       ? "text-green-400"
-                      : line.includes("Error") || line.includes("DENIED")
+                      : line?.includes("Error") || line?.includes("DENIED")
                       ? "text-red-400"
-                      : line.includes("HERO.X BIOS")
+                      : line?.includes("HERO.X BIOS")
                       ? "text-cyan-300 font-bold"
                       : "text-gray-300"
                   }
                 >
-                  {line.includes("OK") ? (
+                  {line?.includes("OK") ? (
                     <span>
                       {line.split("OK")[0]}
                       <span className="text-green-400 font-bold">OK</span>
