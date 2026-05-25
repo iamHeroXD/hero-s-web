@@ -5,16 +5,22 @@ import Image from "next/image";
 import type { WindowState, WindowId } from "@/types";
 
 const START_ITEMS = [
-  { label: "About Me", id: "about" as WindowId, icon: "👤" },
-  { label: "Projects", id: "projects" as WindowId, icon: "💼" },
-  { label: "Terminal", id: "terminal" as WindowId, icon: "💻" },
-  { label: "Music Player", id: "music" as WindowId, icon: "🎵" },
-  { label: "Contact", id: "contact" as WindowId, icon: "📧" },
-  { label: "Socials", id: "socials" as WindowId, icon: "🌐" },
-  { label: "Reviews", id: "reviews" as WindowId, icon: "⭐" },
-  { label: "Resume", id: "resume" as WindowId, icon: "📄" },
-  { label: "My Computer", id: "mycomputer" as WindowId, icon: "🖥️" },
-  { label: "Hidden Secrets", id: "secrets" as WindowId, icon: "🔒" },
+  { label: "About Me",       id: "about"      as WindowId, icon: "👤" },
+  { label: "Projects",       id: "projects"   as WindowId, icon: "💼" },
+  { label: "Terminal",       id: "terminal"   as WindowId, icon: "💻" },
+  { label: "Music Player",   id: "music"      as WindowId, icon: "🎵" },
+  { label: "Contact",        id: "contact"    as WindowId, icon: "📧" },
+  { label: "Socials",        id: "socials"    as WindowId, icon: "🌐" },
+  { label: "Reviews",        id: "reviews"    as WindowId, icon: "⭐" },
+  { label: "Resume",         id: "resume"     as WindowId, icon: "📄" },
+  { label: "My Computer",    id: "mycomputer" as WindowId, icon: "🖥️" },
+  { label: "Hidden Secrets", id: "secrets"    as WindowId, icon: "🔒" },
+];
+
+const QUICK_LAUNCH: { icon: string; id: WindowId; title: string }[] = [
+  { icon: "💻", id: "terminal",  title: "Terminal" },
+  { icon: "👤", id: "about",     title: "About Me" },
+  { icon: "💼", id: "projects",  title: "Projects" },
 ];
 
 interface Props {
@@ -25,10 +31,16 @@ interface Props {
   activeWindowId?: WindowId;
 }
 
-export default function Taskbar({ taskbarWindows, onOpenWindow, onFocusWindow, onMinimizeWindow, activeWindowId }: Props) {
+export default function Taskbar({
+  taskbarWindows,
+  onOpenWindow,
+  onFocusWindow,
+  onMinimizeWindow,
+  activeWindowId,
+}: Props) {
   const [showStart, setShowStart] = useState(false);
-  const [time, setTime] = useState("");
-  const [date, setDate] = useState("");
+  const [time, setTime]           = useState("");
+  const [date, setDate]           = useState("");
 
   useEffect(() => {
     const update = () => {
@@ -37,8 +49,8 @@ export default function Taskbar({ taskbarWindows, onOpenWindow, onFocusWindow, o
       setDate(now.toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" }));
     };
     update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
+    const iv = setInterval(update, 1000);
+    return () => clearInterval(iv);
   }, []);
 
   const handleTaskbarClick = useCallback(
@@ -54,227 +66,359 @@ export default function Taskbar({ taskbarWindows, onOpenWindow, onFocusWindow, o
 
   return (
     <>
-      {/* Click outside to close start menu */}
       {showStart && (
         <div className="fixed inset-0 z-40" onClick={() => setShowStart(false)} />
       )}
 
-      {/* Start Menu */}
+      {/* ── Start Menu ─────────────────────────────────────────── */}
       <AnimatePresence>
         {showStart && (
           <motion.div
-            initial={{ y: 20, opacity: 0, scaleY: 0.9 }}
-            animate={{ y: 0, opacity: 1, scaleY: 1 }}
-            exit={{ y: 20, opacity: 0, scaleY: 0.9 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="fixed bottom-10 left-0 z-50 overflow-hidden rounded-tr-lg"
+            initial={{ opacity: 0, y: 12, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0,  scale: 1    }}
+            exit={  { opacity: 0, y: 12, scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 460, damping: 32 }}
+            className="fixed bottom-12 left-0 z-50 overflow-hidden"
             style={{
-              width: 280,
-              background: "#ECE9D8",
-              border: "2px solid #0A246A",
-              boxShadow: "4px 0 20px rgba(0,0,0,0.5)",
+              width: 310,
+              borderRadius: "8px 8px 0 0",
+              border: "1px solid rgba(255,255,255,0.12)",
+              boxShadow: "4px 0 32px rgba(0,0,0,0.65), 0 -2px 16px rgba(0,0,50,0.4)",
               transformOrigin: "bottom left",
             }}
           >
-            {/* Start menu header */}
+            {/* Header */}
             <div
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 px-4 py-3 relative overflow-hidden"
               style={{
-                background: "linear-gradient(135deg, #0A246A, #3A6EA5)",
+                background: "linear-gradient(135deg, #0c1e6e 0%, #1a4a9e 55%, #0a306e 100%)",
+                minHeight: 64,
               }}
             >
+              {/* Gloss */}
               <div
-                className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0"
-                style={{ boxShadow: "0 0 8px rgba(0,212,255,0.5)" }}
+                className="absolute inset-x-0 top-0 h-1/2 pointer-events-none"
+                style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.12), transparent)" }}
+              />
+              <div
+                className="relative flex-shrink-0"
+                style={{
+                  width: 46, height: 46,
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  boxShadow: "0 0 0 2px rgba(255,255,255,0.3), 0 0 16px rgba(0,200,255,0.45)",
+                }}
               >
-                <Image
-                  src="/pfpofhero.png"
-                  alt="Hero.X"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-cover"
-                  draggable={false}
-                />
+                <Image src="/pfpofhero.png" alt="Hero.X" width={46} height={46} className="w-full h-full object-cover" draggable={false} />
               </div>
-              <div>
-                <div className="text-white font-bold text-sm">Hero.X</div>
-                <div className="text-cyan-300 text-xs">Elite Developer</div>
+              <div className="relative">
+                <div className="text-white font-bold text-sm leading-tight" style={{ fontFamily: "Tahoma, sans-serif", textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}>
+                  Hero.X
+                </div>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="inline-block w-2 h-2 rounded-full" style={{ background: "#00e676", boxShadow: "0 0 6px #00e676" }} />
+                  <span className="text-cyan-300 text-xs" style={{ fontFamily: "Tahoma, sans-serif" }}>Elite Developer</span>
+                </div>
               </div>
             </div>
 
-            {/* Start menu items */}
-            <div className="flex">
-              {/* Left column - apps */}
-              <div className="flex-1 border-r p-1" style={{ borderColor: "#a0a0a0" }}>
-                <div className="text-xs font-bold text-gray-500 px-2 py-1 uppercase tracking-wide">
-                  Apps
+            {/* Body */}
+            <div className="flex" style={{ background: "#ECE9D8" }}>
+              {/* Apps column */}
+              <div className="flex-1 py-1" style={{ borderRight: "1px solid #c8c4bc" }}>
+                <div
+                  className="px-3 py-1 text-xs font-bold uppercase tracking-wider mb-0.5"
+                  style={{ color: "#666", fontFamily: "Tahoma, sans-serif" }}
+                >
+                  Applications
                 </div>
                 {START_ITEMS.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => { onOpenWindow(item.id); setShowStart(false); }}
-                    className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-xs hover:bg-blue-600 hover:text-white transition-all text-left"
+                    className="w-full flex items-center gap-2.5 px-3 py-1.5 text-left group transition-all"
+                    style={{ fontFamily: "Tahoma, sans-serif" }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.background = "#316AC5";
+                      (e.currentTarget as HTMLButtonElement).style.color = "white";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+                      (e.currentTarget as HTMLButtonElement).style.color = "inherit";
+                    }}
                   >
-                    <span className="text-base">{item.icon}</span>
-                    <span className="font-medium">{item.label}</span>
+                    <span className="text-lg leading-none w-6 text-center flex-shrink-0">{item.icon}</span>
+                    <span className="text-xs font-medium truncate">{item.label}</span>
                   </button>
                 ))}
               </div>
 
-              {/* Right column - places */}
-              <div className="w-28 p-1" style={{ background: "#d4f0d4" }}>
-                <div className="text-xs font-bold text-gray-600 px-1 py-1 uppercase tracking-wide">
+              {/* Places column */}
+              <div className="py-1" style={{ width: 110, background: "#dde8f0" }}>
+                <div
+                  className="px-2 py-1 text-xs font-bold uppercase tracking-wider mb-0.5"
+                  style={{ color: "#446", fontFamily: "Tahoma, sans-serif" }}
+                >
                   Places
                 </div>
-                {["My Docs", "My Music", "Desktop", "Control", "Help"].map((item) => (
+                {[
+                  { label: "My Docs",  icon: "📁" },
+                  { label: "Desktop",  icon: "🖥️" },
+                  { label: "Control",  icon: "⚙️" },
+                  { label: "My Music", icon: "🎵" },
+                  { label: "Help",     icon: "❓" },
+                ].map((item) => (
                   <button
-                    key={item}
-                    className="w-full text-left px-1 py-1 text-xs rounded hover:bg-green-600 hover:text-white transition-all"
+                    key={item.label}
+                    className="w-full flex items-center gap-1.5 px-2 py-1.5 text-left text-xs transition-all"
+                    style={{ fontFamily: "Tahoma, sans-serif" }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.background = "#316AC5";
+                      (e.currentTarget as HTMLButtonElement).style.color = "white";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+                      (e.currentTarget as HTMLButtonElement).style.color = "inherit";
+                    }}
                   >
-                    {item}
+                    <span className="text-sm">{item.icon}</span>
+                    <span className="truncate">{item.label}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Start menu footer */}
+            {/* Footer */}
             <div
-              className="flex justify-between p-2 border-t"
+              className="flex items-center justify-between px-3 py-2"
               style={{
-                background: "#d4d0c8",
-                borderColor: "#a0a0a0",
+                background: "linear-gradient(to bottom, #c8c4bc, #b8b4ac)",
+                borderTop: "1px solid #a0a0a0",
               }}
             >
               <button
-                className="flex items-center gap-1 text-xs hover:bg-red-600 hover:text-white px-2 py-1 rounded"
+                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded transition-all font-medium"
+                style={{ fontFamily: "Tahoma, sans-serif" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#c0392b"; (e.currentTarget as HTMLButtonElement).style.color = "white"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = "inherit"; }}
                 onClick={() => {
                   setShowStart(false);
-                  if (typeof window !== "undefined") {
-                    document.dispatchEvent(new CustomEvent("shutdown"));
-                  }
+                  if (typeof window !== "undefined") document.dispatchEvent(new CustomEvent("shutdown"));
                 }}
               >
-                ⏻ Shut Down
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                  <path d="M7 1a6 6 0 1 0 0 12A6 6 0 0 0 7 1zM6 3h2v5H6V3zm1 6.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                Shut Down
               </button>
               <button
-                className="flex items-center gap-1 text-xs hover:bg-blue-600 hover:text-white px-2 py-1 rounded"
-                onClick={() => {
-                  setShowStart(false);
-                  window.location.reload();
-                }}
+                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded transition-all font-medium"
+                style={{ fontFamily: "Tahoma, sans-serif" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#2563eb"; (e.currentTarget as HTMLButtonElement).style.color = "white"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = "inherit"; }}
+                onClick={() => { setShowStart(false); window.location.reload(); }}
               >
-                🔄 Restart
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 7A5 5 0 1 1 9.5 2.5" strokeLinecap="round"/>
+                  <polyline points="10,1 10,4 13,4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Restart
               </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Taskbar */}
+      {/* ── Taskbar ─────────────────────────────────────────────── */}
       <div
-        className="fixed bottom-0 left-0 right-0 z-30 flex items-center h-10 px-1 gap-1"
+        className="fixed bottom-0 left-0 right-0 z-30 flex items-center gap-1 px-1.5"
         style={{
-          background: "linear-gradient(180deg, #2462d8 0%, #1245b8 40%, #0a2e8c 100%)",
-          borderTop: "1px solid rgba(100,160,255,0.5)",
-          boxShadow: "0 -3px 16px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.12)",
+          height: 44,
+          background: "linear-gradient(180deg, #1c52c8 0%, #0e38a0 45%, #0a2880 100%)",
+          borderTop: "1px solid rgba(80,140,255,0.45)",
+          boxShadow: "0 -2px 20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.14)",
         }}
       >
-        {/* Glass top line */}
+        {/* Glass shimmer */}
         <div
-          className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-          style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.25) 30%, rgba(255,255,255,0.25) 70%, transparent)" }}
-        />
-        {/* Start button */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setShowStart(!showStart)}
-          className="flex items-center gap-1.5 px-3 py-1 rounded font-bold text-xs text-white h-8"
+          className="absolute top-0 left-0 right-0 pointer-events-none"
           style={{
-            background: showStart
-              ? "linear-gradient(to bottom, #1e7a1e, #4fc748)"
-              : "linear-gradient(to bottom, #4fc748, #1e7a1e)",
-            border: "1px solid rgba(255,255,255,0.3)",
+            height: "40%",
+            background: "linear-gradient(to bottom, rgba(255,255,255,0.10), rgba(255,255,255,0))",
+          }}
+        />
+
+        {/* ── Start button ── */}
+        <motion.button
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          onClick={() => setShowStart((v) => !v)}
+          className="relative flex items-center gap-1.5 font-bold text-white select-none overflow-hidden flex-shrink-0"
+          style={{
+            height: 32,
+            paddingInline: "12px 14px",
+            borderRadius: 5,
             fontFamily: "Tahoma, Verdana, sans-serif",
+            fontSize: 13,
+            letterSpacing: "0.02em",
+            background: showStart
+              ? "linear-gradient(to bottom, #1c6918, #3da832)"
+              : "linear-gradient(to bottom, #58c240 0%, #2b9620 55%, #1d7a14 100%)",
+            border: "1px solid rgba(255,255,255,0.28)",
             boxShadow: showStart
-              ? "inset 0 1px 3px rgba(0,0,0,0.4)"
-              : "0 1px 3px rgba(0,0,0,0.3)",
+              ? "inset 0 2px 5px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,0,0,0.2)"
+              : "0 2px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.35)",
+            textShadow: "0 1px 3px rgba(0,0,0,0.5)",
           }}
         >
-          <span className="text-sm">⊞</span>
-          <span>start</span>
+          {/* Gloss */}
+          <div
+            className="absolute inset-x-0 top-0 pointer-events-none"
+            style={{ height: "48%", background: "linear-gradient(to bottom, rgba(255,255,255,0.28), rgba(255,255,255,0))", borderRadius: "4px 4px 0 0" }}
+          />
+          <span className="text-base leading-none relative z-10">⊞</span>
+          <span className="relative z-10">start</span>
         </motion.button>
 
-        {/* Separator */}
-        <div className="h-6 w-px bg-blue-700 mx-0.5" />
+        {/* ── Divider ── */}
+        <div
+          className="flex-shrink-0 mx-0.5"
+          style={{
+            width: 1,
+            height: 28,
+            background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.25) 30%, rgba(255,255,255,0.25) 70%, transparent)",
+          }}
+        />
 
-        {/* Open windows */}
-        <div className="flex-1 flex items-center gap-1 overflow-hidden">
-          {taskbarWindows.map((win) => (
+        {/* ── Quick launch ── */}
+        <div className="flex items-center gap-0.5 flex-shrink-0">
+          {QUICK_LAUNCH.map((item) => (
             <motion.button
-              key={win.id}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              whileHover={{ scale: 1.02 }}
-              onClick={() => handleTaskbarClick(win)}
-              className={`taskbar-btn h-7 flex items-center gap-1.5 px-2 truncate text-xs ${
-                win.id === activeWindowId && !win.isMinimized ? "active" : ""
-              }`}
-              title={win.title}
+              key={item.id}
+              whileHover={{ scale: 1.18, y: -1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => onOpenWindow(item.id)}
+              title={item.title}
+              className="flex items-center justify-center text-lg"
               style={{
-                background:
-                  win.id === activeWindowId && !win.isMinimized
-                    ? "linear-gradient(to bottom, #2a65a8, #4183c4)"
-                    : "linear-gradient(to bottom, #4183c4, #2a65a8)",
-                border: "1px solid rgba(255,255,255,0.2)",
-                borderRadius: 3,
-                padding: "2px 8px",
-                color: "white",
-                fontSize: "11px",
+                width: 28, height: 28,
+                borderRadius: 4,
+                background: "rgba(255,255,255,0.07)",
+                border: "1px solid transparent",
                 cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 4,
-                minWidth: 80,
-                maxWidth: 150,
-                height: 28,
-                boxShadow:
-                  win.id === activeWindowId && !win.isMinimized
-                    ? "inset 0 1px 3px rgba(0,0,0,0.4)"
-                    : "none",
-                opacity: win.isMinimized ? 0.7 : 1,
+                filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))",
+                transition: "background 0.15s, border-color 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.18)";
+                (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.22)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.07)";
+                (e.currentTarget as HTMLButtonElement).style.borderColor = "transparent";
               }}
             >
-              <span className="text-xs flex-shrink-0">{win.icon}</span>
-              <span className="truncate flex-1">{win.title}</span>
+              {item.icon}
             </motion.button>
           ))}
         </div>
 
-        {/* System tray */}
+        {/* ── Divider ── */}
         <div
-          className="flex items-center gap-2 px-3 h-8 rounded"
+          className="flex-shrink-0 mx-0.5"
           style={{
-            background: "rgba(0,0,0,0.28)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            flexShrink: 0,
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
+            width: 1,
+            height: 28,
+            background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.22) 30%, rgba(255,255,255,0.22) 70%, transparent)",
+          }}
+        />
+
+        {/* ── Open windows ── */}
+        <div className="flex-1 flex items-center gap-1 overflow-hidden min-w-0">
+          <AnimatePresence>
+            {taskbarWindows.map((win) => {
+              const isActive = win.id === activeWindowId && !win.isMinimized;
+              return (
+                <motion.button
+                  key={win.id}
+                  initial={{ scale: 0.75, opacity: 0, width: 0 }}
+                  animate={{ scale: 1,    opacity: 1, width: "auto" }}
+                  exit={  { scale: 0.75, opacity: 0, width: 0 }}
+                  transition={{ type: "spring", stiffness: 380, damping: 26 }}
+                  whileHover={{ y: -1 }}
+                  onClick={() => handleTaskbarClick(win)}
+                  title={win.title}
+                  className="flex items-center gap-1.5 flex-shrink-0 relative overflow-hidden"
+                  style={{
+                    height: 32,
+                    minWidth: 88,
+                    maxWidth: 148,
+                    paddingInline: "7px 8px",
+                    borderRadius: 4,
+                    fontSize: 11,
+                    fontFamily: "Tahoma, sans-serif",
+                    fontWeight: isActive ? 700 : 500,
+                    cursor: "pointer",
+                    color: "white",
+                    textShadow: "0 1px 2px rgba(0,0,0,0.6)",
+                    opacity: win.isMinimized ? 0.65 : 1,
+                    background: isActive
+                      ? "linear-gradient(to bottom, #163e82, #2458b0)"
+                      : "linear-gradient(to bottom, #2c68c0 0%, #1c4ea0 100%)",
+                    border: isActive
+                      ? "1px solid rgba(100,160,255,0.5)"
+                      : "1px solid rgba(255,255,255,0.15)",
+                    boxShadow: isActive
+                      ? "inset 0 2px 5px rgba(0,0,0,0.45), 0 0 10px rgba(60,130,255,0.2)"
+                      : "inset 0 1px 0 rgba(255,255,255,0.12), 0 1px 3px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  {/* Gloss */}
+                  {!isActive && (
+                    <div
+                      className="absolute inset-x-0 top-0 pointer-events-none"
+                      style={{ height: "45%", background: "linear-gradient(to bottom, rgba(255,255,255,0.14), rgba(255,255,255,0))", borderRadius: "3px 3px 0 0" }}
+                    />
+                  )}
+                  {/* Active bottom indicator */}
+                  {isActive && (
+                    <div
+                      className="absolute bottom-0 left-2 right-2 pointer-events-none"
+                      style={{ height: 2, borderRadius: "2px 2px 0 0", background: "rgba(140,200,255,0.7)", boxShadow: "0 0 6px rgba(100,180,255,0.6)" }}
+                    />
+                  )}
+                  <span className="text-xs flex-shrink-0 relative z-10">{win.icon}</span>
+                  <span className="truncate flex-1 relative z-10">{win.title}</span>
+                </motion.button>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+
+        {/* ── System tray ── */}
+        <div
+          className="flex items-center gap-2 flex-shrink-0 px-3"
+          style={{
+            height: 32,
+            borderRadius: 4,
+            background: "rgba(0,0,0,0.30)",
+            border: "1px solid rgba(255,255,255,0.10)",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.2)",
           }}
         >
-          <span className="text-sm opacity-80">🔊</span>
-          <span className="text-sm opacity-80">🌐</span>
-          <div
-            className="h-4 w-px mx-1"
-            style={{ background: "rgba(255,255,255,0.15)" }}
-          />
-          <div className="text-right">
+          <span className="text-sm" style={{ opacity: 0.75, filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))" }}>🔊</span>
+          <span className="text-sm" style={{ opacity: 0.75, filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))" }}>🌐</span>
+          <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.14)", borderRadius: 1 }} />
+          <div className="text-right" style={{ lineHeight: 1 }}>
             <div
-              className="text-white font-bold leading-none"
-              style={{ fontSize: 12, textShadow: "0 0 8px rgba(150,200,255,0.4)" }}
+              className="text-white font-bold"
+              style={{ fontSize: 12, fontFamily: "Tahoma, sans-serif", textShadow: "0 0 10px rgba(140,200,255,0.45)", letterSpacing: "0.03em" }}
             >
               {time}
             </div>
-            <div className="text-blue-300 leading-none" style={{ fontSize: 10 }}>{date}</div>
+            <div style={{ fontSize: 9, color: "#93c5fd", fontFamily: "Tahoma, sans-serif", marginTop: 1 }}>
+              {date}
+            </div>
           </div>
         </div>
       </div>
