@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { PROJECTS } from "@/config/data";
 import type { Project } from "@/types";
 
-const CATEGORIES = ["All", "Web App", "Game Dev", "Bot", "Design", "AI/ML", "Experiments"];
+const CATEGORIES = ["All", "Web App", "Portfolio", "Tool", "Bot", "Game Dev"];
 
 const STATUS_COLORS: Record<string, string> = {
   live: "#00A82C",
@@ -159,11 +159,10 @@ export default function ProjectsWindow() {
                 >
                   <div className="text-4xl">
                     {project.category === "Web App" ? "🌐" :
-                     project.category === "Game Dev" ? "🎮" :
+                     project.category === "Portfolio" ? "🎨" :
+                     project.category === "Tool" ? "🔧" :
                      project.category === "Bot" ? "🤖" :
-                     project.category === "Design" ? "🎨" :
-                     project.category === "AI/ML" ? "🧠" :
-                     project.category === "Experiments" ? "🔬" : "📁"}
+                     project.category === "Game Dev" ? "🎮" : "📁"}
                   </div>
                   <div
                     className="absolute top-2 right-2 text-xs px-2 py-0.5 rounded-full font-bold"
@@ -255,10 +254,10 @@ export default function ProjectsWindow() {
                   }}
                 >
                   {selectedProject.category === "Web App" ? "🌐" :
-                   selectedProject.category === "Game Dev" ? "🎮" :
+                   selectedProject.category === "Portfolio" ? "🎨" :
+                   selectedProject.category === "Tool" ? "🔧" :
                    selectedProject.category === "Bot" ? "🤖" :
-                   selectedProject.category === "Design" ? "🎨" :
-                   selectedProject.category === "AI/ML" ? "🧠" : "🔬"}
+                   selectedProject.category === "Game Dev" ? "🎮" : "📁"}
                   <div
                     className="absolute bottom-2 right-2 px-3 py-1 rounded-full text-xs font-bold text-white"
                     style={{ background: STATUS_COLORS[selectedProject.status] }}
@@ -300,12 +299,25 @@ export default function ProjectsWindow() {
                 </div>
 
                 <div className="flex gap-2">
-                  <button
-                    className="flex-1 py-2 rounded text-xs font-bold text-white transition-all hover:scale-105"
-                    style={{ background: "linear-gradient(135deg, #0A246A, #3A6EA5)" }}
-                  >
-                    🚀 View Project
-                  </button>
+                  {selectedProject.link ? (
+                    <a
+                      href={selectedProject.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-2 rounded text-xs font-bold text-white transition-all hover:scale-105 text-center"
+                      style={{ background: "linear-gradient(135deg, #0A246A, #3A6EA5)" }}
+                    >
+                      🐙 View on GitHub
+                    </a>
+                  ) : (
+                    <button
+                      className="flex-1 py-2 rounded text-xs font-bold text-white transition-all hover:scale-105"
+                      style={{ background: "linear-gradient(135deg, #0A246A, #3A6EA5)", opacity: 0.6, cursor: "not-allowed" }}
+                      disabled
+                    >
+                      🔒 Private Repo
+                    </button>
+                  )}
                   <button
                     className="flex-1 py-2 rounded text-xs font-bold transition-all hover:scale-105"
                     style={{ background: "#d4d0c8", border: "1px solid #a0a0a0", color: "#333" }}

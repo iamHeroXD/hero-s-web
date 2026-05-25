@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { SKILLS } from "@/config/data";
 
-const TYPED_TEXT = "Full-Stack Developer | Roblox Creator | UI Designer | Bot Dev | Ethical Hacker";
+const TYPED_TEXT = "Front-end Developer | Discord Bot Dev | UI Designer | 40+ Websites Built";
 
 export default function AboutWindow() {
   const [typedIndex, setTypedIndex] = useState(0);
@@ -72,13 +73,19 @@ export default function AboutWindow() {
               <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="w-32 h-32 rounded-full flex items-center justify-center text-6xl relative"
+                className="relative w-32 h-32 rounded-full overflow-hidden"
                 style={{
-                  background: "linear-gradient(135deg, #0A246A, #3A6EA5, #00D4FF)",
                   boxShadow: "0 0 30px rgba(0, 212, 255, 0.4), 0 0 0 4px #ECE9D8, 0 0 0 6px #3A6EA5",
                 }}
               >
-                👾
+                <Image
+                  src="/pfpofhero.png"
+                  alt="Hero.X"
+                  width={128}
+                  height={128}
+                  className="w-full h-full object-cover"
+                  draggable={false}
+                />
                 {/* Online indicator */}
                 <div
                   className="absolute bottom-2 right-2 w-4 h-4 rounded-full border-2 border-white"
@@ -106,12 +113,12 @@ export default function AboutWindow() {
                   <span className="font-bold text-blue-800">Elite</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">XP</span>
-                  <span className="font-bold text-green-700">1337+</span>
+                  <span className="text-gray-600">Years</span>
+                  <span className="font-bold text-green-700">3+</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Projects</span>
-                  <span className="font-bold text-purple-700">20+</span>
+                  <span className="font-bold text-purple-700">40+</span>
                 </div>
               </div>
             </div>
@@ -138,13 +145,13 @@ export default function AboutWindow() {
               >
                 <p className="font-bold text-blue-900 text-base">Hey, I&apos;m Hero.X 👋</p>
                 <p className="text-gray-700 leading-relaxed text-xs">
-                  A 17-year-old developer and creator who builds stuff that probably shouldn&apos;t exist. I
-                  specialize in crafting insane web experiences, Roblox games, Discord bots, and UI designs
-                  that make people do a double-take.
+                  Front-end developer and Discord bot dev with 3+ years of experience and 40+ websites
+                  shipped. I design and build clean, high-performing web interfaces and scalable Discord
+                  systems that people actually enjoy using.
                 </p>
                 <p className="text-gray-700 leading-relaxed text-xs">
-                  Part hacker, part designer, part Roblox legend — I operate at the intersection of
-                  creativity and code. Currently building the future, one project at a time.
+                  Available remotely, globally. Whether it&apos;s a portfolio site, a business platform,
+                  or a fully-featured Discord bot — I build it right, first time.
                 </p>
               </div>
 
@@ -152,7 +159,7 @@ export default function AboutWindow() {
               <div>
                 <div className="text-xs font-bold text-gray-600 mb-2 uppercase tracking-wide">Interests</div>
                 <div className="flex flex-wrap gap-2">
-                  {["Web Dev", "Game Dev", "UI/UX", "Ethical Hacking", "AI/ML", "Discord Bots", "Animation", "Creative Coding", "Roblox", "Open Source"].map((tag) => (
+                  {["Web Dev", "UI/UX Design", "Discord Bots", "Node.js", "JavaScript", "Animation", "Creative Coding", "Roblox", "Open Source", "Remote Work"].map((tag) => (
                     <motion.span
                       key={tag}
                       whileHover={{ scale: 1.05, y: -1 }}
@@ -316,18 +323,18 @@ export default function AboutWindow() {
               <div className="text-cyan-400 font-bold mb-3">HERO.X SYSTEM INFORMATION</div>
               {[
                 ["Operator", "Hero.X"],
-                ["Role", "Full-Stack Developer / Creator"],
-                ["Age", "17 years"],
-                ["Location", "Planet Earth, UTC+5:30"],
+                ["Role", "Front-end Dev + Discord Bot Dev"],
+                ["Location", "Remote / Global"],
                 ["Status", "● ONLINE — Building things"],
-                ["Experience", "4+ years coding"],
-                ["Projects", "20+ shipped"],
-                ["Languages", "JS, TS, Lua, HTML, CSS, Python"],
-                ["Frameworks", "React, Next.js, Discord.js"],
+                ["Experience", "3+ years"],
+                ["Projects", "40+ shipped"],
+                ["Languages", "HTML, CSS, JS, Node.js"],
+                ["Frameworks", "Discord.js, React, Next.js"],
+                ["Database", "SQLite"],
                 ["Current Build", "Hero.X Portfolio OS v1.337"],
                 ["Availability", "Open for work & collabs"],
-                ["Discord", "herox.dev"],
-                ["Roblox", "Hero_H622"],
+                ["Discord", "x.hero_dev"],
+                ["Email", "heeroh622@gmail.com"],
               ].map(([key, val]) => (
                 <div key={key} className="flex gap-2">
                   <span className="text-green-400 w-28 flex-shrink-0">{key}:</span>

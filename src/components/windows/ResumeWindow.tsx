@@ -27,13 +27,13 @@ export default function ResumeWindow() {
         >
           <h1 className="text-3xl font-bold text-gray-800 mb-1">Hero.X</h1>
           <div className="text-blue-700 font-bold text-sm mb-2">
-            Full-Stack Developer | Roblox Creator | UI Designer
+            Front-end Developer | Discord Bot Dev | UI Designer
           </div>
           <div className="flex justify-center gap-4 text-xs text-gray-600 flex-wrap">
-            <span>💬 herox.dev</span>
+            <span>💬 x.hero_dev</span>
             <span>🐙 github.com/iamHeroXD</span>
-            <span>🎮 Hero_H622</span>
-            <span>🌐 @HeroXDev</span>
+            <span>✉️ heeroh622@gmail.com</span>
+            <span>🐦 @herox_dev</span>
           </div>
         </motion.div>
 
@@ -45,10 +45,10 @@ export default function ResumeWindow() {
             title: "Summary",
             content: (
               <p className="text-xs text-gray-700 leading-relaxed">
-                Creative full-stack developer with 4+ years of experience building web applications,
-                Roblox games, Discord bots, and UI systems. Passionate about crafting unique digital
-                experiences that blend technical excellence with creative design. Currently pursuing
-                ambitious projects at the intersection of gaming, web, and AI.
+                Front-end developer and Discord bot developer with 3+ years of experience and 40+ websites
+                shipped. I design and build clean, high-performing web interfaces and scalable Discord systems.
+                Proficient in HTML, CSS, JavaScript, Node.js, Discord.js, and SQLite. Available remotely,
+                globally — I build it right, first time.
               </p>
             ),
           },
@@ -58,23 +58,13 @@ export default function ResumeWindow() {
               <div className="space-y-3">
                 {[
                   {
-                    role: "Freelance Full-Stack Developer",
+                    role: "Freelance Front-end Developer",
                     company: "Self-employed",
-                    period: "2023 – Present",
+                    period: "2022 – Present",
                     items: [
-                      "Built 10+ custom portfolio and business websites for clients",
-                      "Developed HustleHub and TurfMacha — full-stack platforms with 100+ users",
-                      "Designed and deployed AI-powered automation tools",
-                    ],
-                  },
-                  {
-                    role: "Roblox Game Developer",
-                    company: "Independent Creator",
-                    period: "2021 – Present",
-                    items: [
-                      "Created 8+ Roblox experiences with 50K+ total visits",
-                      "Scripted complex game mechanics using Lua and Roblox Studio",
-                      "Designed custom UIs and HUD systems for games",
+                      "Built 40+ custom portfolio and business websites for clients worldwide",
+                      "Shipped projects including HustleHub, MrQuaxkers Portfolio, NotScriptedPro, Paco",
+                      "Served as front-end developer for a 5000+ member Discord server community",
                     ],
                   },
                   {
@@ -82,9 +72,19 @@ export default function ResumeWindow() {
                     company: "Freelance",
                     period: "2022 – Present",
                     items: [
-                      "Built 10+ Discord bots serving 10,000+ users across 50+ servers",
-                      "Implemented moderation, economy, and custom game systems",
-                      "Developed using Discord.js, Node.js, and MongoDB",
+                      "Built Marketplace Bot and 10+ other Discord bots for client servers",
+                      "Implemented economy, moderation, listing and transaction systems",
+                      "Developed with Discord.js, Node.js, and SQLite for data persistence",
+                    ],
+                  },
+                  {
+                    role: "Roblox Developer",
+                    company: "Independent Creator",
+                    period: "2021 – Present",
+                    items: [
+                      "Created Robux Calculator tool — widely used by the Roblox community",
+                      "Designed custom UIs and HUD systems for Roblox games",
+                      "Built interactive experiences using Roblox Studio",
                     ],
                   },
                 ].map((exp) => (
@@ -112,10 +112,9 @@ export default function ResumeWindow() {
             content: (
               <div className="flex flex-wrap gap-2">
                 {[
-                  "HTML/CSS", "JavaScript", "TypeScript", "React", "Next.js",
-                  "Lua", "Roblox Studio", "Discord.js", "Firebase", "Supabase",
-                  "Node.js", "Python", "Framer Motion", "Tailwind CSS", "Git/GitHub",
-                  "UI/UX Design", "Figma", "AI Tools", "REST APIs",
+                  "HTML", "CSS", "JavaScript", "Node.js", "Discord.js", "SQLite",
+                  "React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion",
+                  "UI/UX Design", "Git/GitHub", "Roblox Studio",
                 ].map((skill) => (
                   <span
                     key={skill}
@@ -156,10 +155,10 @@ export default function ResumeWindow() {
             content: (
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { name: "HustleHub", desc: "Productivity platform for freelancers" },
-                  { name: "TurfMacha", desc: "Sports ground booking platform" },
-                  { name: "Discord Bots Suite", desc: "10+ bots, 10K+ users" },
-                  { name: "Roblox Games", desc: "8+ games, 50K+ visits" },
+                  { name: "HustleHub", desc: "Productivity platform — HTML/CSS/JS" },
+                  { name: "Marketplace Bot", desc: "Discord.js + Node.js + SQLite" },
+                  { name: "MrQuaxkers Portfolio", desc: "Client portfolio site" },
+                  { name: "Robux Calculator", desc: "Roblox community tool" },
                 ].map((p) => (
                   <div key={p.name} className="rounded p-2" style={{ background: "white", border: "1px solid #d4d0c8" }}>
                     <div className="font-bold text-xs text-blue-800">{p.name}</div>

@@ -5,97 +5,90 @@ export const PROJECTS: Project[] = [
     id: "hustlehub",
     title: "HustleHub",
     description:
-      "A full-stack productivity platform for freelancers and indie hackers. Features task management, income tracking, and client management with a beautiful dashboard UI.",
-    tags: ["Next.js", "TypeScript", "Firebase", "Tailwind"],
+      "A productivity platform built for freelancers and indie hackers. Features task management, income tracking, and a clean dashboard UI.",
+    tags: ["HTML", "CSS", "JavaScript"],
     status: "live",
     category: "Web App",
     year: "2024",
-    size: "42.3 MB",
+    size: "38.2 MB",
+    link: "https://github.com/iamHeroXD/HustleHub",
   },
   {
-    id: "turfmacha",
-    title: "TurfMacha",
+    id: "mrquaxkers",
+    title: "MrQuaxkers Portfolio",
     description:
-      "Sports ground booking platform — find, book, and manage turf bookings near you. Built with real-time availability and payment integration.",
-    tags: ["React", "Node.js", "Supabase", "Maps API"],
-    status: "live",
-    category: "Web App",
-    year: "2024",
-    size: "38.7 MB",
-  },
-  {
-    id: "discord-bots",
-    title: "Discord Bots Suite",
-    description:
-      "Collection of feature-rich Discord bots: moderation, economy, music, and fun commands. Used by 50+ servers with 10,000+ users.",
-    tags: ["JavaScript", "Discord.js", "MongoDB", "Node.js"],
+      "Custom portfolio website designed and built for a client. Clean, responsive layout with modern UI/UX design principles.",
+    tags: ["HTML", "CSS", "JavaScript"],
     status: "completed",
+    category: "Portfolio",
+    year: "2024",
+    size: "5.4 MB",
+    link: "https://github.com/iamHeroXD/MrQuaxkers-portfolio",
+  },
+  {
+    id: "notscriptedpro",
+    title: "NotScriptedPro",
+    description:
+      "Portfolio site for a content creator. Built with a focus on performance, clean design, and an engaging user experience.",
+    tags: ["HTML", "CSS", "JavaScript"],
+    status: "completed",
+    category: "Portfolio",
+    year: "2024",
+    size: "7.1 MB",
+    link: "https://github.com/iamHeroXD/NotScriptedPro",
+  },
+  {
+    id: "paco",
+    title: "Paco Portfolio",
+    description:
+      "Custom portfolio website for a client. Professional layout with smooth animations and polished visual design.",
+    tags: ["HTML", "CSS", "JavaScript"],
+    status: "completed",
+    category: "Portfolio",
+    year: "2024",
+    size: "4.8 MB",
+    link: "https://github.com/iamHeroXD/Paco",
+  },
+  {
+    id: "robuxcalc",
+    title: "Robux Calculator",
+    description:
+      "A clean and accurate Robux ↔ USD converter for the Roblox community. Simple, instant, and widely used by players worldwide.",
+    tags: ["HTML", "CSS", "JavaScript"],
+    status: "live",
+    category: "Tool",
+    year: "2023",
+    size: "1.2 MB",
+    link: "https://github.com/iamHeroXD/Robux-Calculator",
+  },
+  {
+    id: "marketplace-bot",
+    title: "Marketplace Bot",
+    description:
+      "Feature-rich Discord.js bot for a 5000+ member server — handles listings, transactions, moderation, and economy systems with SQLite persistence.",
+    tags: ["Discord.js", "Node.js", "JavaScript", "SQLite"],
+    status: "live",
     category: "Bot",
     year: "2023",
-    size: "12.1 MB",
-  },
-  {
-    id: "roblox-projects",
-    title: "Roblox Game Collection",
-    description:
-      "Multiple Roblox experiences: RPG combat systems, tycoon games, obby challenges. Built with Lua scripting and advanced game mechanics.",
-    tags: ["Lua", "Roblox Studio", "Scripting", "UI Design"],
-    status: "live",
-    category: "Game Dev",
-    year: "2022-2024",
-    size: "250+ MB",
-  },
-  {
-    id: "portfolio-websites",
-    title: "Portfolio Websites",
-    description:
-      "Designed and developed 10+ custom portfolio websites for clients. Each one unique, creative, and optimized for performance and SEO.",
-    tags: ["Next.js", "Framer Motion", "Tailwind", "Design"],
-    status: "completed",
-    category: "Design",
-    year: "2023-2024",
-    size: "Various",
-  },
-  {
-    id: "ai-tools",
-    title: "AI Tools & Automation",
-    description:
-      "Built AI-powered tools using OpenAI and Claude APIs. Includes a content generator, code reviewer, and automated workflow systems.",
-    tags: ["Python", "OpenAI", "Claude API", "Automation"],
-    status: "wip",
-    category: "AI/ML",
-    year: "2024",
-    size: "8.4 MB",
-  },
-  {
-    id: "experimental",
-    title: "Experimental Concepts",
-    description:
-      "Lab for wild ideas — WebGL experiments, generative art, weird interactions. This is where creativity has no boundaries.",
-    tags: ["WebGL", "Three.js", "Canvas API", "Creative"],
-    status: "wip",
-    category: "Experiments",
-    year: "2024",
-    size: "5.2 MB",
+    size: "18.5 MB",
   },
 ];
 
 export const SKILLS: Skill[] = [
-  { name: "HTML", level: 95, category: "Frontend", color: "#E34F26" },
-  { name: "CSS", level: 90, category: "Frontend", color: "#264DE4" },
-  { name: "JavaScript", level: 88, category: "Frontend", color: "#F7DF1E" },
-  { name: "TypeScript", level: 82, category: "Frontend", color: "#3178C6" },
-  { name: "React", level: 85, category: "Frontend", color: "#61DAFB" },
-  { name: "Next.js", level: 83, category: "Frontend", color: "#000000" },
-  { name: "Roblox Studio", level: 90, category: "Game Dev", color: "#FF0000" },
-  { name: "Lua", level: 88, category: "Game Dev", color: "#000080" },
-  { name: "Firebase", level: 75, category: "Backend", color: "#FFCA28" },
-  { name: "Supabase", level: 70, category: "Backend", color: "#3ECF8E" },
-  { name: "UI/UX Design", level: 87, category: "Design", color: "#F24E1E" },
-  { name: "Discord Bots", level: 92, category: "Bot Dev", color: "#5865F2" },
-  { name: "Framer Motion", level: 80, category: "Animation", color: "#0055FF" },
-  { name: "GitHub", level: 88, category: "Tools", color: "#181717" },
-  { name: "AI Tools", level: 78, category: "AI/ML", color: "#00A67E" },
+  { name: "HTML", level: 96, category: "Frontend", color: "#E34F26" },
+  { name: "CSS", level: 93, category: "Frontend", color: "#264DE4" },
+  { name: "JavaScript", level: 91, category: "Frontend", color: "#F7DF1E" },
+  { name: "Node.js", level: 85, category: "Backend", color: "#539E43" },
+  { name: "Discord.js", level: 93, category: "Bot Dev", color: "#5865F2" },
+  { name: "SQLite", level: 80, category: "Backend", color: "#003B57" },
+  { name: "React", level: 73, category: "Frontend", color: "#61DAFB" },
+  { name: "Next.js", level: 70, category: "Frontend", color: "#4A90D9" },
+  { name: "TypeScript", level: 68, category: "Frontend", color: "#3178C6" },
+  { name: "Tailwind CSS", level: 83, category: "Frontend", color: "#38BDF8" },
+  { name: "UI/UX Design", level: 88, category: "Design", color: "#F24E1E" },
+  { name: "Roblox Studio", level: 80, category: "Game Dev", color: "#FF0000" },
+  { name: "GitHub", level: 90, category: "Tools", color: "#181717" },
+  { name: "Framer Motion", level: 75, category: "Animation", color: "#0055FF" },
 ];
 
 export const REVIEWS: Review[] = [
@@ -207,94 +200,98 @@ export const TERMINAL_COMMANDS: Record<string, string | (() => string)> = {
 │          HERO.X :: PROFILE v2.0             │
 ├─────────────────────────────────────────────┤
 │ Name    : Hero.X                            │
-│ Role    : Full-Stack Dev / Creator          │
+│ Role    : Front-end Dev + Discord Bot Dev   │
 │ Status  : [● ONLINE] Building things        │
-│ Age     : 17                                │
+│ Location: Remote / Global                   │
 │ XP      : 1337+                             │
-│ Level   : Elite Developer                   │
+│ Projects: 40+ shipped                       │
 ├─────────────────────────────────────────────┤
-│ A developer who builds stuff that           │
-│ shouldn't exist. Part hacker, part          │
-│ designer, part Roblox legend.               │
+│ I design and build clean, high-performing   │
+│ web interfaces and scalable Discord systems.│
 │                                             │
-│ Stack  : Next.js · TypeScript · Lua · Python│
-│ Tools  : Framer Motion · Tailwind · Discord │
+│ Stack  : HTML · CSS · JS · Node.js          │
+│ Tools  : Discord.js · SQLite · GitHub       │
+│ Also   : React · Next.js · Framer Motion    │
 │                                             │
-│ Currently: Breaking the internet. 🌐        │
+│ Currently: Building the internet. 🌐        │
 └─────────────────────────────────────────────┘`,
 
   neofetch: () => {
     const hour = new Date().getHours();
     const uptime = `${Math.floor(Math.random() * 12 + 1)}h ${Math.floor(Math.random() * 59)}m`;
-    return `        👾        hero.x@hero-os
-       /███\\       ─────────────────────
-      /█████\\      OS: Hero.X OS v1.337
-     /███████\\     Host: Portfolio Machine
-    /█████████\\    Kernel: 5.15.0-hero
-   /███████████\\   Uptime: ${uptime}
-  /█████████████\\  Shell: hero-terminal v1.337
- /███████████████\\ Resolution: ${typeof window !== "undefined" ? window.innerWidth : "??"}×${typeof window !== "undefined" ? window.innerHeight : "??"}
-─────────────────  Theme: Cyberpunk XP
+    return `   ██╗  ██╗███████╗██████╗  ██████╗      hero.x@hero-os
+   ██║  ██║██╔════╝██╔══██╗██╔═══██╗     ─────────────────────
+   ███████║█████╗  ██████╔╝██║   ██║     OS: Hero.X OS v1.337
+   ██╔══██║██╔══╝  ██╔══██╗██║   ██║     Host: Portfolio Machine
+   ██║  ██║███████╗██║  ██║╚██████╔╝     Kernel: 5.15.0-hero
+   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝      Uptime: ${uptime}
+                                          Shell: hero-terminal v1.337
+   ██╗  ██╗                               Resolution: ${typeof window !== "undefined" ? window.innerWidth : "??"}×${typeof window !== "undefined" ? window.innerHeight : "??"}
+   ╚██╗██╔╝                               Theme: Cyberpunk XP
+    ╚███╔╝                                Role: Front-end Dev + Bot Dev
+    ██╔██╗                                Stack: HTML CSS JS Node.js
+   ██╔╝ ██╗                               Bots: Discord.js + SQLite
+   ╚═╝  ╚═╝                               Projects: 40+ shipped
+─────────────────────────────────────
 CPU: Creative Chaos™ @ MAX GHz
 RAM: 16 GB Caffeine / 16 GB Total
-GPU: Imagination Pro 9090
 NET: Connected to The Grid ∞
 Time: ${hour < 5 ? "🌙 Night Owl Mode" : hour < 12 ? "🌅 Morning" : hour < 18 ? "☀️ Afternoon" : "🌆 Evening"}`;
   },
 
   projects: `PROJECTS :: C:\\Hero\\Projects\\
 ══════════════════════════════════════
-[● LIVE]  HustleHub.exe       v2.1  42.3MB
-[● LIVE]  TurfMacha.exe       v1.8  38.7MB
-[● LIVE]  DiscordBots.exe     v3.5  12.1MB
-[● LIVE]  RobloxProjects.exe  v∞   250MB+
-[✓ DONE]  PortfolioSites.exe  v1.0  Various
-[◐ WIP ]  AITools.exe         v0.7  8.4MB
-[◐ WIP ]  Experimental.exe    v0.3  5.2MB
+[● LIVE]  HustleHub.exe          v1.0  38.2MB
+[✓ DONE]  MrQuaxkers.exe         v1.0  5.4MB
+[✓ DONE]  NotScriptedPro.exe     v1.0  7.1MB
+[✓ DONE]  Paco.exe               v1.0  4.8MB
+[● LIVE]  RobuxCalculator.exe    v1.0  1.2MB
+[● LIVE]  MarketplaceBot.exe     v2.0  18.5MB
 ══════════════════════════════════════
-Open the Projects window for full details`,
+Open the Projects window for full details
+github.com/iamHeroXD`,
 
   skills: `SKILL_TREE :: C:\\Hero\\System\\skills.sys
 ══════════════════════════════════════
 [FRONTEND]
-  HTML         ██████████ 95% ⭐
-  CSS          █████████░ 90%
-  JavaScript   █████████░ 88%
-  TypeScript   ████████░░ 82%
-  React        █████████░ 85%
-  Next.js      ████████░░ 83%
+  HTML         ██████████ 96% ⭐
+  CSS          █████████░ 93% ⭐
+  JavaScript   █████████░ 91% ⭐
+  Tailwind     ████████░░ 83%
+  React        ███████░░░ 73%
+  Next.js      ███████░░░ 70%
+  TypeScript   ██████░░░░ 68%
 
-[GAME DEV]
-  Roblox Studio █████████░ 90% ⭐
-  Lua            █████████░ 88%
-
-[BACKEND]
-  Firebase    ████████░░ 75%
-  Supabase    ███████░░░ 70%
-  Node.js     ████████░░ 78%
+[BACKEND & BOTS]
+  Discord.js   █████████░ 93% ⭐
+  Node.js      █████████░ 85%
+  SQLite       ████████░░ 80%
 
 [CREATIVE]
-  UI/UX Design  █████████░ 87%
-  Discord Bots  █████████░ 92% ⭐
-  Framer Motion ████████░░ 80%
-  AI Tools      ████████░░ 78%`,
+  UI/UX Design  █████████░ 88% ⭐
+  GitHub        █████████░ 90%
+  Framer Motion ████████░░ 75%
+
+[GAME DEV]
+  Roblox Studio ████████░░ 80%`,
 
   socials: `SOCIAL LINKS :: ALL SYSTEMS ONLINE
 ══════════════════════════════════════
-[●] Roblox   : Hero_H622
 [●] GitHub   : github.com/iamHeroXD
-[●] Discord  : herox.dev
-[●] X/Twitter: @HeroXDev
+[●] Discord  : x.hero_dev
+[●] Twitter/X: @herox_dev
+[●] Roblox   : roblox.com/users/5541405985
 [●] Portfolio: hero-os.vercel.app
 ══════════════════════════════════════
 Status: Available for work & collabs 🟢`,
 
   contact: `CONTACT :: CHANNELS OPEN
 ══════════════════════════════════════
-[>] Discord  : herox.dev       (fastest)
-[>] Email    : hero@herox.dev
+[>] Discord  : x.hero_dev       (fastest)
+[>] Email    : heeroh622@gmail.com
+[>] GitHub   : github.com/iamHeroXD
 [>] Status   : Available for work
-[>] Timezone : UTC+5:30 (IST)
+[>] Location : Remote / Global
 [>] Response : < 24 hours
 ══════════════════════════════════════
 Open the Contact app for the mail form`,
@@ -302,13 +299,13 @@ Open the Contact app for the mail form`,
   whoami: `> whoami
 ╔══════════════════════════════════════╗
 ║  hero.x                              ║
-║  developer. creator. builder.        ║
+║  developer. designer. builder.       ║
 ║  ────────────────────────────────    ║
-║  currently: making the impossible.   ║
-║  power level: OVER 9000             ║
-║  threat level: VERY FRIENDLY         ║
-║  age: 17   timezone: UTC+5:30        ║
-║  mode: FULL SEND                     ║
+║  currently: building the internet.   ║
+║  stack  : HTML · CSS · JS · Node.js  ║
+║  bots   : Discord.js + SQLite        ║
+║  sites  : 40+ shipped                ║
+║  mode   : FULL SEND / REMOTE         ║
 ╚══════════════════════════════════════╝`,
 
   sudo: `[sudo] password for hero.x: ****
@@ -482,10 +479,12 @@ Secret code: 1337
 
 ...and you're genuinely awesome for reading this. 🎉`,
 
-  "cat about.txt": `Name  : Hero.X
-Age   : 17
-Role  : Full-Stack Developer / Creator
-Status: ONLINE — Building
+  "cat about.txt": `Name    : Hero.X
+Role    : Front-end Developer + Discord Bot Dev
+Location: Remote / Global
+Stack   : HTML, CSS, JavaScript, Node.js, Discord.js, SQLite
+Sites   : 40+ websites shipped
+Status  : ONLINE — Building
 Fun fact: This entire portfolio is a fake OS.
          You're literally inside my mind right now. 👁️`,
 

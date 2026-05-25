@@ -1,21 +1,9 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const SOCIALS = [
-  {
-    id: "roblox",
-    name: "Roblox",
-    icon: "🎮",
-    username: "Hero_H622",
-    url: "https://roblox.com/users/Hero_H622",
-    color: "#FF4444",
-    bg: "linear-gradient(135deg, #FF4444, #CC0000)",
-    followers: "500+",
-    status: "● Online",
-    desc: "Game developer & UI designer. Check out my Roblox creations!",
-    stats: [{ label: "Games", val: "8+" }, { label: "Visits", val: "50K+" }, { label: "Friends", val: "120+" }],
-  },
   {
     id: "github",
     name: "GitHub",
@@ -26,41 +14,54 @@ const SOCIALS = [
     bg: "linear-gradient(135deg, #2b2b2b, #1a1a1a)",
     followers: "50+",
     status: "● Active",
-    desc: "Open source projects, portfolio code, and experiments.",
-    stats: [{ label: "Repos", val: "30+" }, { label: "Stars", val: "100+" }, { label: "Commits", val: "1K+" }],
+    desc: "All my real projects — portfolios, tools, bots, and more. 40+ websites shipped.",
+    stats: [{ label: "Repos", val: "30+" }, { label: "Sites", val: "40+" }, { label: "Commits", val: "1K+" }],
   },
   {
     id: "discord",
     name: "Discord",
     icon: "💬",
-    username: "herox.dev",
+    username: "x.hero_dev",
     url: "#",
     color: "#5865F2",
     bg: "linear-gradient(135deg, #5865F2, #3b45c7)",
-    followers: "1K+",
+    followers: "5K+ srv",
     status: "● Online",
-    desc: "Join my server or DM me for collabs and projects.",
-    stats: [{ label: "Server", val: "1K+" }, { label: "Bots Made", val: "10+" }, { label: "Messages", val: "∞" }],
+    desc: "DM me for collabs, projects, or just to say hi. Front-end dev for a 5000+ member server.",
+    stats: [{ label: "Server", val: "5K+" }, { label: "Bots Made", val: "10+" }, { label: "Messages", val: "∞" }],
   },
   {
     id: "twitter",
     name: "Twitter / X",
     icon: "🐦",
-    username: "@HeroXDev",
-    url: "https://x.com/HeroXDev",
+    username: "@herox_dev",
+    url: "https://x.com/herox_dev",
     color: "#1DA1F2",
     bg: "linear-gradient(135deg, #1DA1F2, #0c7abf)",
     followers: "200+",
     status: "● Active",
-    desc: "Dev updates, thoughts, and random ideas at 3am.",
+    desc: "Dev updates, UI drops, and random thoughts at 3am.",
     stats: [{ label: "Posts", val: "500+" }, { label: "Following", val: "300+" }, { label: "Likes", val: "2K+" }],
+  },
+  {
+    id: "roblox",
+    name: "Roblox",
+    icon: "🎮",
+    username: "Hero_H622",
+    url: "https://roblox.com/users/5541405985/profile",
+    color: "#FF4444",
+    bg: "linear-gradient(135deg, #FF4444, #CC0000)",
+    followers: "500+",
+    status: "● Online",
+    desc: "Game developer & UI designer. Custom HUDs, games, and Robux tools.",
+    stats: [{ label: "Games", val: "8+" }, { label: "Visits", val: "50K+" }, { label: "Friends", val: "120+" }],
   },
 ];
 
 export default function SocialsWindow() {
   const [activeTab, setActiveTab] = useState<string>(SOCIALS[0].id);
   const [loading, setLoading] = useState(false);
-  const [url, setUrl] = useState("https://hero.x/socials");
+  const [url, setUrl] = useState("https://github.com/iamHeroXD");
 
   const activeSocial = SOCIALS.find((s) => s.id === activeTab)!;
 
@@ -165,14 +166,20 @@ export default function SocialsWindow() {
                 style={{ background: activeSocial.bg }}
               >
                 <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center text-3xl"
+                  className="w-16 h-16 rounded-full overflow-hidden"
                   style={{
-                    background: "white",
                     border: "3px solid white",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
                   }}
                 >
-                  {activeSocial.icon}
+                  <Image
+                    src="/pfpofhero.png"
+                    alt="Hero.X"
+                    width={64}
+                    height={64}
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                  />
                 </div>
               </div>
 

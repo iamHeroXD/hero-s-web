@@ -7,33 +7,66 @@ type FormState = "idle" | "sending" | "success" | "error";
 export default function ContactWindow() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [formState, setFormState] = useState<FormState>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
   const [progress, setProgress] = useState(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
+      setErrorMsg("Please fill in all required fields (Name, Email, Message).");
       setFormState("error");
       setTimeout(() => setFormState("idle"), 3000);
       return;
     }
 
     setFormState("sending");
+    setProgress(0);
+
+    // Animate progress bar while waiting
     let p = 0;
-    const interval = setInterval(() => {
-      p += Math.random() * 15 + 5;
-      if (p >= 100) {
-        p = 100;
-        clearInterval(interval);
+    const ticker = setInterval(() => {
+      p += Math.random() * 12 + 4;
+      if (p >= 88) { p = 88; clearInterval(ticker); }
+      setProgress(Math.min(p, 88));
+    }, 120);
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: "e84b7147-4208-47fd-8ecc-ff8a59168b4b",
+          name: form.name,
+          email: form.email,
+          subject: form.subject || `New message from ${form.name} via Hero.X Portfolio`,
+          message: form.message,
+        }),
+      });
+
+      clearInterval(ticker);
+      const data = await res.json();
+
+      if (data.success) {
+        setProgress(100);
         setTimeout(() => setFormState("success"), 300);
+      } else {
+        setErrorMsg("Server error. Please try Discord instead: x.hero_dev");
+        setFormState("error");
+        setTimeout(() => setFormState("idle"), 4000);
       }
-      setProgress(Math.min(p, 100));
-    }, 100);
+    } catch {
+      clearInterval(ticker);
+      setErrorMsg("Connection failed. Please try Discord: x.hero_dev");
+      setFormState("error");
+      setTimeout(() => setFormState("idle"), 4000);
+    }
   };
 
   const handleReset = () => {
     setForm({ name: "", email: "", subject: "", message: "" });
     setFormState("idle");
     setProgress(0);
+    setErrorMsg("");
   };
 
   return (
@@ -64,27 +97,31 @@ export default function ContactWindow() {
             <div className="font-bold text-gray-800 text-sm">New Message — Hero.X Mail Client</div>
             <div className="text-xs text-green-600 font-bold flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
-              Available for work & collaborations
+              Available for work &amp; collaborations
             </div>
           </div>
         </div>
 
         {/* Contact info row */}
-        <div className="flex gap-4 text-xs">
+        <div className="flex gap-4 text-xs flex-wrap">
           <div className="flex items-center gap-1.5 p-2 rounded" style={{ background: "white", border: "1px solid #d4d0c8" }}>
             <span>💬</span>
-            <span className="font-mono text-blue-800 font-bold">herox.dev</span>
+            <span className="font-mono text-blue-800 font-bold">x.hero_dev</span>
             <button
               className="ml-1 text-xs px-1.5 py-0.5 rounded hover:bg-blue-600 hover:text-white transition-all"
               style={{ background: "#d4d0c8", border: "1px solid #a0a0a0" }}
-              onClick={() => navigator.clipboard?.writeText("herox.dev")}
+              onClick={() => navigator.clipboard?.writeText("x.hero_dev")}
             >
               Copy
             </button>
           </div>
           <div className="flex items-center gap-1.5 p-2 rounded" style={{ background: "white", border: "1px solid #d4d0c8" }}>
-            <span>🕐</span>
-            <span className="text-gray-600">UTC+5:30</span>
+            <span>✉️</span>
+            <span className="font-mono text-blue-700 text-xs">heeroh622@gmail.com</span>
+          </div>
+          <div className="flex items-center gap-1.5 p-2 rounded" style={{ background: "white", border: "1px solid #d4d0c8" }}>
+            <span>🌍</span>
+            <span className="text-gray-600">Remote / Global</span>
           </div>
         </div>
       </div>
@@ -149,7 +186,7 @@ export default function ContactWindow() {
                   value={form.message}
                   onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                   className="xp-input text-xs resize-none"
-                  rows={6}
+                  rows={5}
                   placeholder="Write your message here... (tell me about your project, collab idea, or just say hi 👋)"
                   required
                   style={{ fontFamily: "Tahoma, sans-serif" }}
@@ -187,10 +224,10 @@ export default function ContactWindow() {
                 <div className="text-xs font-bold text-yellow-800 mb-2">⚡ Quick Contact</div>
                 <div className="flex gap-2 flex-wrap">
                   {[
-                    { label: "Discord", icon: "💬", value: "herox.dev" },
+                    { label: "Discord", icon: "💬", value: "x.hero_dev" },
                     { label: "GitHub", icon: "🐙", value: "iamHeroXD" },
-                    { label: "Roblox", icon: "🎮", value: "Hero_H622" },
-                    { label: "Twitter/X", icon: "🐦", value: "@HeroXDev" },
+                    { label: "Twitter/X", icon: "🐦", value: "@herox_dev" },
+                    { label: "Email", icon: "✉️", value: "heeroh622@gmail.com" },
                   ].map((s) => (
                     <div
                       key={s.label}
@@ -216,10 +253,8 @@ export default function ContactWindow() {
               className="p-8 flex flex-col items-center justify-center gap-4"
             >
               <div className="text-6xl">⚠️</div>
-              <div className="font-bold text-red-700 text-lg">Error: Missing Required Fields</div>
-              <div className="text-gray-600 text-sm text-center">
-                Please fill in all required fields (Name, Email, Message) before sending.
-              </div>
+              <div className="font-bold text-red-700 text-lg">Error</div>
+              <div className="text-gray-600 text-sm text-center max-w-xs">{errorMsg}</div>
               <button
                 onClick={handleReset}
                 className="xp-button"
@@ -251,6 +286,7 @@ export default function ContactWindow() {
                       width: `${progress}%`,
                       background: "linear-gradient(90deg, #0A246A, #3A6EA5, #00D4FF)",
                     }}
+                    transition={{ duration: 0.15 }}
                   />
                 </div>
                 <div className="text-center text-xs text-gray-600 mt-1">{Math.round(progress)}%</div>

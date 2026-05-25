@@ -42,6 +42,7 @@ export interface Project {
   year: string;
   size: string;
   preview?: string;
+  link?: string;
 }
 
 export interface Skill {

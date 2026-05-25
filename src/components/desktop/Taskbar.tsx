@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import type { WindowState, WindowId } from "@/types";
 
 const START_ITEMS = [
@@ -83,10 +84,17 @@ export default function Taskbar({ taskbarWindows, onOpenWindow, onFocusWindow, o
               }}
             >
               <div
-                className="w-10 h-10 rounded-full flex items-center justify-center text-xl"
-                style={{ background: "linear-gradient(135deg, #7B2FFF, #00D4FF)" }}
+                className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0"
+                style={{ boxShadow: "0 0 8px rgba(0,212,255,0.5)" }}
               >
-                👾
+                <Image
+                  src="/pfpofhero.png"
+                  alt="Hero.X"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
+                  draggable={false}
+                />
               </div>
               <div>
                 <div className="text-white font-bold text-sm">Hero.X</div>

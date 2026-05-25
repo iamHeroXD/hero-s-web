@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { BOOT_MESSAGES } from "@/config/data";
 
 type BootPhase = "bios" | "loading" | "login" | "done";
@@ -283,13 +284,20 @@ export default function BootSequence({ onComplete }: Props) {
             >
               {/* Avatar */}
               <div
-                className="w-24 h-24 rounded-full flex items-center justify-center text-4xl"
+                className="w-24 h-24 rounded-full overflow-hidden flex-shrink-0"
                 style={{
-                  background: "linear-gradient(135deg, #7B2FFF, #00D4FF)",
-                  boxShadow: "0 0 30px rgba(123, 47, 255, 0.5)",
+                  boxShadow: "0 0 30px rgba(123, 47, 255, 0.6), 0 0 0 3px rgba(0,212,255,0.4)",
                 }}
               >
-                👾
+                <Image
+                  src="/pfpofhero.png"
+                  alt="Hero.X"
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-cover"
+                  draggable={false}
+                  priority
+                />
               </div>
 
               <div className="text-center">
