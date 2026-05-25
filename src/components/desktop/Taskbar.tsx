@@ -174,11 +174,16 @@ export default function Taskbar({ taskbarWindows, onOpenWindow, onFocusWindow, o
       <div
         className="fixed bottom-0 left-0 right-0 z-30 flex items-center h-10 px-1 gap-1"
         style={{
-          background: "linear-gradient(to bottom, #245EDC 0%, #0A246A 100%)",
-          borderTop: "1px solid #4A90D9",
-          boxShadow: "0 -2px 10px rgba(0,0,0,0.4)",
+          background: "linear-gradient(180deg, #2462d8 0%, #1245b8 40%, #0a2e8c 100%)",
+          borderTop: "1px solid rgba(100,160,255,0.5)",
+          boxShadow: "0 -3px 16px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.12)",
         }}
       >
+        {/* Glass top line */}
+        <div
+          className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+          style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.25) 30%, rgba(255,255,255,0.25) 70%, transparent)" }}
+        />
         {/* Start button */}
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -248,18 +253,28 @@ export default function Taskbar({ taskbarWindows, onOpenWindow, onFocusWindow, o
 
         {/* System tray */}
         <div
-          className="flex items-center gap-2 px-2 h-8 rounded"
+          className="flex items-center gap-2 px-3 h-8 rounded"
           style={{
-            background: "rgba(0,0,0,0.2)",
-            border: "1px solid rgba(255,255,255,0.1)",
+            background: "rgba(0,0,0,0.28)",
+            border: "1px solid rgba(255,255,255,0.12)",
             flexShrink: 0,
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
           }}
         >
-          <span className="text-sm">🔊</span>
-          <span className="text-sm">🌐</span>
+          <span className="text-sm opacity-80">🔊</span>
+          <span className="text-sm opacity-80">🌐</span>
+          <div
+            className="h-4 w-px mx-1"
+            style={{ background: "rgba(255,255,255,0.15)" }}
+          />
           <div className="text-right">
-            <div className="text-white text-xs font-bold leading-none">{time}</div>
-            <div className="text-blue-300 text-xs leading-none">{date}</div>
+            <div
+              className="text-white font-bold leading-none"
+              style={{ fontSize: 12, textShadow: "0 0 8px rgba(150,200,255,0.4)" }}
+            >
+              {time}
+            </div>
+            <div className="text-blue-300 leading-none" style={{ fontSize: 10 }}>{date}</div>
           </div>
         </div>
       </div>

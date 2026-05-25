@@ -63,43 +63,47 @@ export default function DesktopIcons({ onOpenWindow }: Props) {
         {DESKTOP_ICONS.map((icon, i) => (
           <motion.div
             key={icon.id}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1 + i * 0.05, type: "spring", stiffness: 300, damping: 20 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.5, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.1 + i * 0.05, type: "spring", stiffness: 320, damping: 22 }}
+            whileHover={{ scale: 1.12, y: -2 }}
+            whileTap={{ scale: 0.93 }}
             onClick={(e) => { e.stopPropagation(); setSelectedIcon(icon.id); }}
             onDoubleClick={() => handleDoubleClick(icon.id)}
             onContextMenu={(e) => handleContextMenu(e, icon.id)}
-            className="flex flex-col items-center gap-1 cursor-pointer rounded p-1 select-none"
+            className="flex flex-col items-center gap-1.5 cursor-pointer rounded-lg p-1.5 select-none transition-all"
             style={{
-              background:
-                selectedIcon === icon.id
-                  ? "rgba(58, 110, 165, 0.3)"
-                  : "transparent",
-              border:
-                selectedIcon === icon.id
-                  ? "1px dashed rgba(255, 255, 255, 0.6)"
-                  : "1px solid transparent",
+              background: selectedIcon === icon.id
+                ? "rgba(30, 90, 190, 0.45)"
+                : "rgba(0,0,0,0.01)",
+              border: selectedIcon === icon.id
+                ? "1px solid rgba(120, 200, 255, 0.7)"
+                : "1px solid transparent",
+              backdropFilter: selectedIcon === icon.id ? "blur(6px)" : "none",
+              boxShadow: selectedIcon === icon.id
+                ? "0 0 16px rgba(0,180,255,0.25), inset 0 1px 0 rgba(255,255,255,0.1)"
+                : "none",
             }}
           >
             <motion.div
               animate={
                 selectedIcon === icon.id
-                  ? { filter: "drop-shadow(0 0 8px rgba(0, 212, 255, 0.8))" }
-                  : { filter: "drop-shadow(2px 2px 4px rgba(0,0,0,0.5))" }
+                  ? { filter: "drop-shadow(0 0 10px rgba(0, 212, 255, 0.9)) drop-shadow(0 2px 6px rgba(0,0,0,0.6))" }
+                  : { filter: "drop-shadow(2px 3px 5px rgba(0,0,0,0.7))" }
               }
-              className="text-3xl leading-none"
+              className="text-4xl leading-none"
             >
               {icon.icon}
             </motion.div>
             <span
-              className="text-white text-xs text-center leading-tight font-bold"
+              className="text-center leading-tight font-bold"
               style={{
-                textShadow: "1px 1px 3px rgba(0,0,0,0.9), -1px -1px 3px rgba(0,0,0,0.9)",
+                color: "white",
+                textShadow: "1px 1px 4px rgba(0,0,0,1), -1px -1px 4px rgba(0,0,0,1), 0 0 8px rgba(0,0,0,0.8)",
                 fontSize: "10px",
-                maxWidth: "72px",
+                maxWidth: "74px",
                 wordBreak: "break-word",
+                lineHeight: "1.3",
               }}
             >
               {icon.label}

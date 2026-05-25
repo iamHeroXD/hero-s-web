@@ -148,37 +148,46 @@ export default function Window({
           <div
             className="flex flex-col h-full overflow-hidden"
             style={{
-              border: isActive ? "2px solid #0A246A" : "2px solid #5a82c0",
+              border: isActive ? "2px solid #1e4fa8" : "2px solid #4a6899",
               borderRadius: win.isMaximized ? 0 : 8,
               boxShadow: isActive
-                ? "0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1)"
-                : "0 4px 16px rgba(0,0,0,0.4)",
+                ? "0 16px 48px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.18), 0 0 28px rgba(58,110,200,0.28)"
+                : "0 8px 28px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06)",
               background: "#ECE9D8",
             }}
           >
             {/* Title bar */}
             <div
-              className={`flex items-center justify-between px-2 py-1 cursor-move flex-shrink-0`}
+              className={`flex items-center justify-between px-2 py-1 cursor-move flex-shrink-0 relative overflow-hidden`}
               onMouseDown={handleTitlebarMouseDown}
               onDoubleClick={handleDoubleClick}
               style={{
                 background: isActive
-                  ? "linear-gradient(to bottom, #0A246A 0%, #3A6EA5 100%)"
-                  : "linear-gradient(to bottom, #7a96df 0%, #5a82c0 100%)",
-                minHeight: "30px",
+                  ? "linear-gradient(160deg, #1a3c8a 0%, #0d2a6e 40%, #2a5ea8 100%)"
+                  : "linear-gradient(to bottom, #6a86cc 0%, #4e6aaa 100%)",
+                minHeight: "32px",
               }}
             >
-              <div className="flex items-center gap-2 min-w-0 flex-1">
+              {/* Gloss highlight */}
+              <div
+                className="absolute inset-x-0 top-0 pointer-events-none"
+                style={{
+                  height: "50%",
+                  background: "linear-gradient(to bottom, rgba(255,255,255,0.22), rgba(255,255,255,0))",
+                  borderRadius: win.isMaximized ? 0 : "6px 6px 0 0",
+                }}
+              />
+              <div className="flex items-center gap-2 min-w-0 flex-1 relative z-10">
                 <span className="text-base leading-none">{win.icon}</span>
                 <span
                   className="text-white font-bold text-xs truncate"
-                  style={{ fontFamily: "Tahoma, Verdana, sans-serif", textShadow: "0 1px 2px rgba(0,0,0,0.5)" }}
+                  style={{ fontFamily: "Tahoma, Verdana, sans-serif", textShadow: "0 1px 3px rgba(0,0,0,0.7), 0 0 8px rgba(100,160,255,0.3)" }}
                 >
                   {win.title}
                 </span>
               </div>
 
-              <div className="flex items-center gap-1 flex-shrink-0">
+              <div className="flex items-center gap-1 flex-shrink-0 relative z-10">
                 {/* Minimize */}
                 <button
                   className="hover:scale-110 transition-transform"
