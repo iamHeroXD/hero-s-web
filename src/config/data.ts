@@ -157,161 +157,346 @@ export const REVIEWS: Review[] = [
 ];
 
 export const TERMINAL_COMMANDS: Record<string, string | (() => string)> = {
-  help: `Available commands:
-  help        - Show this menu
-  about       - About Hero.X
-  projects    - List projects
-  skills      - Display skill list
-  socials     - Show social links
-  contact     - Get contact info
-  whoami      - Who is Hero.X?
-  clear       - Clear terminal
-  sudo        - Try your luck...
-  hack        - Initiate hack sequence
-  matrix      - Activate matrix mode
-  easteregg   - ????
-  history     - Show command history
-  sysinfo     - System information
-  pwd         - Print working directory
-  ls          - List directory contents
-  cat         - Read a file`,
+  help: `HERO.X TERMINAL v1.337 — Available Commands
+═══════════════════════════════════════════════
+  NAVIGATION
+  ──────────────────────────────────────────
+  help          Show this help menu
+  about         About Hero.X
+  whoami        Who is Hero.X?
+  sysinfo       System information
+  neofetch      System info with ASCII art
 
-  about: `┌─────────────────────────────────────────┐
-│           HERO.X :: PROFILE v2.0        │
-├─────────────────────────────────────────┤
-│ Name    : Hero.X                        │
-│ Role    : Full-Stack Dev / Creator      │
-│ Status  : [ONLINE] Building things      │
-│ Age     : 17                            │
-│ XP      : 1337+                         │
-│ Level   : Elite Developer               │
-├─────────────────────────────────────────┤
-│ A developer who builds stuff that       │
-│ shouldn't exist. Part hacker, part      │
-│ designer, part Roblox legend.           │
-│                                         │
-│ Currently: Breaking the internet.       │
-└─────────────────────────────────────────┘`,
+  PORTFOLIO
+  ──────────────────────────────────────────
+  projects      List all projects
+  skills        Display skill tree
+  socials       Show social links
+  contact       Get contact info
+
+  FILESYSTEM
+  ──────────────────────────────────────────
+  ls            List directory contents
+  pwd           Print working directory
+  cat <file>    Read a file
+  tree          Show directory tree
+
+  FUN & SECRETS
+  ──────────────────────────────────────────
+  hack          Initiate hack sequence
+  matrix        Activate matrix mode
+  scan          Port scan simulation
+  decode        Decode a message
+  easteregg     ????
+  fortune       Random wisdom
+  ping          Ping the matrix
+  date          Show current time
+
+  SYSTEM
+  ──────────────────────────────────────────
+  achievements  View your achievements
+  history       Show command history
+  sudo          Try your luck
+  clear         Clear terminal
+  echo <msg>    Print a message
+
+  [Tab]  autocomplete  |  [↑/↓]  history nav
+  [Ctrl+L]  clear screen`,
+
+  about: `┌─────────────────────────────────────────────┐
+│          HERO.X :: PROFILE v2.0             │
+├─────────────────────────────────────────────┤
+│ Name    : Hero.X                            │
+│ Role    : Full-Stack Dev / Creator          │
+│ Status  : [● ONLINE] Building things        │
+│ Age     : 17                                │
+│ XP      : 1337+                             │
+│ Level   : Elite Developer                   │
+├─────────────────────────────────────────────┤
+│ A developer who builds stuff that           │
+│ shouldn't exist. Part hacker, part          │
+│ designer, part Roblox legend.               │
+│                                             │
+│ Stack  : Next.js · TypeScript · Lua · Python│
+│ Tools  : Framer Motion · Tailwind · Discord │
+│                                             │
+│ Currently: Breaking the internet. 🌐        │
+└─────────────────────────────────────────────┘`,
+
+  neofetch: () => {
+    const hour = new Date().getHours();
+    const uptime = `${Math.floor(Math.random() * 12 + 1)}h ${Math.floor(Math.random() * 59)}m`;
+    return `        👾        hero.x@hero-os
+       /███\\       ─────────────────────
+      /█████\\      OS: Hero.X OS v1.337
+     /███████\\     Host: Portfolio Machine
+    /█████████\\    Kernel: 5.15.0-hero
+   /███████████\\   Uptime: ${uptime}
+  /█████████████\\  Shell: hero-terminal v1.337
+ /███████████████\\ Resolution: ${typeof window !== "undefined" ? window.innerWidth : "??"}×${typeof window !== "undefined" ? window.innerHeight : "??"}
+─────────────────  Theme: Cyberpunk XP
+CPU: Creative Chaos™ @ MAX GHz
+RAM: 16 GB Caffeine / 16 GB Total
+GPU: Imagination Pro 9090
+NET: Connected to The Grid ∞
+Time: ${hour < 5 ? "🌙 Night Owl Mode" : hour < 12 ? "🌅 Morning" : hour < 18 ? "☀️ Afternoon" : "🌆 Evening"}`;
+  },
 
   projects: `PROJECTS :: C:\\Hero\\Projects\\
-══════════════════════════════
-[EXE]  HustleHub.exe         - Live
-[EXE]  TurfMacha.exe         - Live
-[EXE]  DiscordBots.exe       - Active
-[EXE]  RobloxProjects.exe    - Live
-[EXE]  PortfolioSites.exe    - Done
-[EXE]  AITools.exe           - WIP
-[EXE]  Experimental.exe      - WIP
-══════════════════════════════
-Type 'open <project>' to view`,
+══════════════════════════════════════
+[● LIVE]  HustleHub.exe       v2.1  42.3MB
+[● LIVE]  TurfMacha.exe       v1.8  38.7MB
+[● LIVE]  DiscordBots.exe     v3.5  12.1MB
+[● LIVE]  RobloxProjects.exe  v∞   250MB+
+[✓ DONE]  PortfolioSites.exe  v1.0  Various
+[◐ WIP ]  AITools.exe         v0.7  8.4MB
+[◐ WIP ]  Experimental.exe    v0.3  5.2MB
+══════════════════════════════════════
+Open the Projects window for full details`,
 
-  skills: `SKILL_TREE :: LOADING...
-█████████░ HTML         95%
-████████░░ CSS          90%
-████████░░ JavaScript   88%
-████████░░ React        85%
-████████░░ Next.js      83%
-█████████░ Roblox       90%
-█████████░ Lua          88%
-█████████░ Discord Bots 92%
-███████░░░ UI/UX Design 87%
-████████░░ TypeScript   82%`,
+  skills: `SKILL_TREE :: C:\\Hero\\System\\skills.sys
+══════════════════════════════════════
+[FRONTEND]
+  HTML         ██████████ 95% ⭐
+  CSS          █████████░ 90%
+  JavaScript   █████████░ 88%
+  TypeScript   ████████░░ 82%
+  React        █████████░ 85%
+  Next.js      ████████░░ 83%
 
-  socials: `SOCIAL LINKS :: ONLINE
-══════════════════════════════
+[GAME DEV]
+  Roblox Studio █████████░ 90% ⭐
+  Lua            █████████░ 88%
+
+[BACKEND]
+  Firebase    ████████░░ 75%
+  Supabase    ███████░░░ 70%
+  Node.js     ████████░░ 78%
+
+[CREATIVE]
+  UI/UX Design  █████████░ 87%
+  Discord Bots  █████████░ 92% ⭐
+  Framer Motion ████████░░ 80%
+  AI Tools      ████████░░ 78%`,
+
+  socials: `SOCIAL LINKS :: ALL SYSTEMS ONLINE
+══════════════════════════════════════
 [●] Roblox   : Hero_H622
 [●] GitHub   : github.com/iamHeroXD
 [●] Discord  : herox.dev
-[●] X        : @HeroXDev
-══════════════════════════════`,
+[●] X/Twitter: @HeroXDev
+[●] Portfolio: hero-os.vercel.app
+══════════════════════════════════════
+Status: Available for work & collabs 🟢`,
 
   contact: `CONTACT :: CHANNELS OPEN
-══════════════════════════════
-[>] Discord  : herox.dev
+══════════════════════════════════════
+[>] Discord  : herox.dev       (fastest)
 [>] Email    : hero@herox.dev
 [>] Status   : Available for work
-[>] Timezone : UTC+5:30
-══════════════════════════════
-Open Contact window for forms`,
+[>] Timezone : UTC+5:30 (IST)
+[>] Response : < 24 hours
+══════════════════════════════════════
+Open the Contact app for the mail form`,
 
   whoami: `> whoami
-hero.x — developer. creator. builder.
-currently: making things that shouldn't exist.
-power level: over 9000.
-threat level: friendly.`,
+╔══════════════════════════════════════╗
+║  hero.x                              ║
+║  developer. creator. builder.        ║
+║  ────────────────────────────────    ║
+║  currently: making the impossible.   ║
+║  power level: OVER 9000             ║
+║  threat level: VERY FRIENDLY         ║
+║  age: 17   timezone: UTC+5:30        ║
+║  mode: FULL SEND                     ║
+╚══════════════════════════════════════╝`,
 
   sudo: `[sudo] password for hero.x: ****
-Sorry, user 'visitor' is not in the sudoers file.
-This incident has been reported.
-Nice try though 😏`,
+sudo: WARNING: You are not the hero you think you are.
+sudo: This incident will be reported to /dev/null.
+sudo: Permission denied (and yes, we logged your attempt 😏)
+Hint: try 'hack' instead`,
 
-  hack: `INITIATING HACK SEQUENCE...
-> Scanning target...
-> Bypassing firewall... [DONE]
-> Injecting payload... [DONE]
-> Accessing mainframe... [DENIED]
-> Access denied: L33T skills required
-> Try: sudo hack --level=elite
-> Hint: You are already inside the matrix 👀`,
+  scan: `NETWORK SCANNER v2.0 — INITIATING...
+══════════════════════════════════════
+> Target: portfolio.herox.dev
+> Protocol: TCP/HTTPS
+> Scanning ports...
 
-  easteregg: `🥚 YOU FOUND AN EASTER EGG!
-+100 XP added to your account
-Secret message: "The code is the art."
-Konami Code: ↑↑↓↓←→←→BA for more secrets...`,
+PORT    STATE    SERVICE     VERSION
+22/tcp  closed   ssh         -
+80/tcp  open     http        Next.js 15
+443/tcp open     https       Vercel Edge
+3000/tcp filtered dev-server -
+1337/tcp open    hero-api    v1.337 ⭐
 
-  sysinfo: `HERO.X OS v1.337 :: SYSTEM INFO
-══════════════════════════════
-CPU    : Creative Chaos™ @ MAX GHz
-RAM    : 16 GB caffeine
-GPU    : Imagination Pro 9090
-HDD    : Infinite Ideas™
-OS     : Hero.X OS (Windows XP inspired)
-UPTIME : Building since day 1
-BIOS   : Hero UEFI v2.0
-NET    : Connected to the grid
-══════════════════════════════`,
+> Vulnerability scan: 0 CVEs found
+> Security rating: A+
+> Encryption: TLS 1.3
+> Headers: CSP, HSTS, X-Frame-Options ✓
+══════════════════════════════════════
+Scan complete. All systems secure 🛡️`,
+
+  decode: `DECODE MODULE v1.0 — RUNNING...
+══════════════════════════════════════
+Input (Base64): SGVyby5YIGlzIGEgbGVnZW5k
+Decoding...  [██████████] 100%
+Output: "Hero.X is a legend"
+
+Input (Hex): 48 65 72 6F 2E 58
+Decoding...  [██████████] 100%
+Output: "Hero.X"
+
+Input (ROT13): Ureh.K vf ohvyqvat gur shgher
+Decoding...  [██████████] 100%
+Output: "Hero.X is building the future"
+
+Input (Binary): 01001000 01100101 01110010 01101111
+Decoding...  [██████████] 100%
+Output: "Hero"
+══════════════════════════════════════
+All messages successfully decoded ✓`,
+
+  easteregg: `🥚 ═══ EASTER EGG FOUND ═══ 🥚
++100 XP added to your account!
+
+Secret transmission: "The code is the art."
+Hidden truth: null !== undefined
+Pro tip: Try the Konami Code on the desktop
+          ↑ ↑ ↓ ↓ ← → ← → B A
+
+You're now officially part of the inner circle.
+Welcome, hacker. 👾`,
+
+  sysinfo: () => `HERO.X OS v1.337 :: SYSTEM INFORMATION
+══════════════════════════════════════
+CPU     : Creative Chaos™ @ 9.99 GHz
+RAM     : 16384 MB (${Math.floor(Math.random() * 3000 + 10000)} MB used)
+GPU     : Imagination Pro 9090 Ti
+HDD     : Infinite Ideas™ [∞ GB free]
+OS      : Hero.X OS (XP + Cyberpunk Edition)
+UPTIME  : ${Math.floor(Math.random() * 8 + 1)}h ${Math.floor(Math.random() * 59)}m
+BIOS    : Hero UEFI v2.0
+NET     : Connected to The Grid ∞
+BROWSER : ${typeof navigator !== "undefined" ? navigator.userAgent.split(" ").slice(-1)[0] : "Unknown"}
+SCREEN  : ${typeof window !== "undefined" ? `${window.innerWidth}×${window.innerHeight}` : "??"}
+LOCALE  : ${typeof navigator !== "undefined" ? navigator.language : "??"}
+══════════════════════════════════════`,
 
   pwd: `C:\\Users\\Hero.X\\Desktop`,
 
   ls: `Directory of C:\\Users\\Hero.X\\Desktop
+ Volume: Hero.X OS   Serial: 1337-CAFE
 
-<DIR>  .
-<DIR>  ..
-<DIR>  Projects
-<DIR>  Secret_Files
-<DIR>  Source_Code
-       about.txt
-       resume.pdf
-       matrix.exe
-       easter_egg.txt
-       skills.sys
-       README.md`,
+<DIR>    .
+<DIR>    ..
+<DIR>    Projects              [7 items]
+<DIR>    Secret_Files          [LOCKED]
+<DIR>    Source_Code           [GIT REPO]
+<DIR>    Designs               [Figma exports]
+         about.txt             2.4 KB
+         resume.pdf            84.1 KB
+         matrix.exe            13.37 KB
+         easter_egg.txt        0.5 KB
+         skills.sys            4.2 KB
+         README.md             1.7 KB
+         konami_code.secret    ??? KB
+
+       12 File(s)    4,096 bytes
+        4 Dir(s)     ∞ bytes free`,
+
+  tree: `C:\\Users\\Hero.X\\Desktop
+├── Projects\\
+│   ├── HustleHub.exe
+│   ├── TurfMacha.exe
+│   ├── DiscordBots.exe
+│   ├── RobloxProjects.exe
+│   └── Experimental.exe
+├── Secret_Files\\
+│   ├── [LOCKED] unreleased_projects.exe
+│   ├── secret_level_1.txt
+│   ├── origin_story.md
+│   ├── hacker_manifesto.txt
+│   └── easter_eggs_list.json
+├── Source_Code\\
+│   ├── portfolio-os\\  [this very project]
+│   └── .gitconfig
+├── README.md
+└── resume.pdf
+
+5 directories, 13 files`,
+
+  fortune: () => {
+    const quotes = [
+      '"The best code is no code at all." — Jeff Atwood',
+      '"First, solve the problem. Then, write the code." — John Johnson',
+      '"Code never lies. Comments sometimes do." — Ron Jeffries',
+      '"It works on my machine." — Every Developer Ever',
+      '"rm -rf is the ultimate undo." — anonymous',
+      '"There are 10 types of developers: those who know binary, and those who don\'t." — Classic',
+      '"I don\'t always test my code, but when I do, I do it in production." — Meme',
+      '"Build things that shouldn\'t exist." — Hero.X',
+      '"Ship early, iterate often, never stop learning." — Unknown',
+      '"The code you write today is the legacy code someone else will inherit tomorrow." — Truth',
+    ];
+    return `🔮 Fortune for this session:\n\n  ${quotes[Math.floor(Math.random() * quotes.length)]}\n\nRun 'fortune' again for another insight.`;
+  },
+
+  ping: () => `PING matrix.herox.dev (1.3.3.7):
+64 bytes from 1.3.3.7: icmp_seq=0 ttl=64 time=${(Math.random() * 2 + 0.5).toFixed(2)} ms
+64 bytes from 1.3.3.7: icmp_seq=1 ttl=64 time=${(Math.random() * 2 + 0.5).toFixed(2)} ms
+64 bytes from 1.3.3.7: icmp_seq=2 ttl=64 time=${(Math.random() * 2 + 0.5).toFixed(2)} ms
+64 bytes from 1.3.3.7: icmp_seq=3 ttl=64 time=${(Math.random() * 2 + 0.5).toFixed(2)} ms
+
+--- matrix.herox.dev ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss
+round-trip min/avg/max = 0.5/1.2/2.3 ms
+The grid is responsive. 🟢`,
+
+  date: () => {
+    const now = new Date();
+    return `HERO.X OS CLOCK
+══════════════════════
+Local  : ${now.toLocaleString()}
+UTC    : ${now.toUTCString()}
+Unix   : ${Math.floor(now.getTime() / 1000)}
+ISO    : ${now.toISOString()}
+Week   : Week ${Math.ceil((now.getDate() + new Date(now.getFullYear(), now.getMonth(), 1).getDay()) / 7)} of ${now.getFullYear()}
+══════════════════════`;
+  },
 
   "cat readme.md": `# Hero.X Portfolio OS
-Version: 1.337.0
-Built with: Coffee, creativity, and chaos.
-Warning: Highly addictive. Use responsibly.`,
+  Version  : 1.337.0
+  Built on : Next.js 15 + TypeScript + Framer Motion
+  Style    : Windows XP × Cyberpunk 2077
+  Warning  : Highly addictive. Use responsibly.
 
-  "cat easter_egg.txt": `Congratulations, hacker.
-You found the hidden file.
+  Stars on GitHub appreciated 🌟
+  github.com/iamHeroXD/hero-s-web`,
+
+  "cat easter_egg.txt": `Congratulations, hacker. You found the hidden file.
+
 The real secret is: null !== undefined
-...and: you're awesome for reading this.`,
+Hidden truth: The matrix has you.
+Secret code: 1337
+
+...and you're genuinely awesome for reading this. 🎉`,
+
+  "cat about.txt": `Name  : Hero.X
+Age   : 17
+Role  : Full-Stack Developer / Creator
+Status: ONLINE — Building
+Fun fact: This entire portfolio is a fake OS.
+         You're literally inside my mind right now. 👁️`,
 
   matrix: `MATRIX MODE ACTIVATED
-> Redirecting reality...
+> Disconnecting from the simulation...
 > Loading green rain...
-> You took the red pill. Welcome.`,
-
-  history: `1  help
-2  whoami
-3  about
-4  skills
-5  hack
-6  sudo
-7  matrix
-8  easteregg`,
+> You took the red pill. Welcome to reality.`,
 
   clear: "CLEAR",
+
+  achievements: "ACHIEVEMENTS_OPEN",
 };
 
 export const BOOT_MESSAGES = [

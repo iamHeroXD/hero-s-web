@@ -1,0 +1,27 @@
+{
+  "name": "Hero.X Portfolio OS",
+  "short_name": "Hero.X OS",
+  "description": "Interactive cyberpunk portfolio OS — built with Next.js 15",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a2e",
+  "theme_color": "#0a0a2e",
+  "orientation": "landscape-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["portfolio", "developer", "productivity"],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "label": "Hero.X OS Desktop"
+    }
+  ]
+}

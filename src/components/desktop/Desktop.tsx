@@ -1,30 +1,40 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
-import { AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import { useWindowManager } from "@/hooks/useWindowManager";
 import { useNotifications } from "@/hooks/useNotifications";
+import { useSound } from "@/hooks/useSound";
+import { useAchievements } from "@/hooks/useAchievements";
 import Window from "@/components/windows/Window";
-import AboutWindow from "@/components/windows/AboutWindow";
-import ProjectsWindow from "@/components/windows/ProjectsWindow";
-import ContactWindow from "@/components/windows/ContactWindow";
-import SocialsWindow from "@/components/windows/SocialsWindow";
-import ReviewsWindow from "@/components/windows/ReviewsWindow";
-import TerminalWindow from "@/components/windows/TerminalWindow";
-import MusicWindow from "@/components/windows/MusicWindow";
-import MyComputerWindow from "@/components/windows/MyComputerWindow";
-import SecretsWindow from "@/components/windows/SecretsWindow";
-import ResumeWindow from "@/components/windows/ResumeWindow";
 import Wallpaper from "@/components/desktop/Wallpaper";
 import DesktopIcons from "@/components/desktop/DesktopIcon";
 import Taskbar from "@/components/desktop/Taskbar";
 import Notifications from "@/components/effects/Notifications";
-import MatrixRain from "@/components/effects/MatrixRain";
-import BSOD from "@/components/effects/BSOD";
 import DesktopRightClick from "@/components/effects/DesktopRightClick";
-import MobileOverlay from "@/components/effects/MobileOverlay";
 import type { WindowId } from "@/types";
 
-const KONAMI_CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+// Lazy-load all window content — only downloaded when opened
+const AboutWindow      = dynamic(() => import("@/components/windows/AboutWindow"),     { ssr: false });
+const ProjectsWindow   = dynamic(() => import("@/components/windows/ProjectsWindow"),  { ssr: false });
+const ContactWindow    = dynamic(() => import("@/components/windows/ContactWindow"),   { ssr: false });
+const SocialsWindow    = dynamic(() => import("@/components/windows/SocialsWindow"),   { ssr: false });
+const ReviewsWindow    = dynamic(() => import("@/components/windows/ReviewsWindow"),   { ssr: false });
+const TerminalWindow   = dynamic(() => import("@/components/windows/TerminalWindow"),  { ssr: false });
+const MusicWindow      = dynamic(() => import("@/components/windows/MusicWindow"),     { ssr: false });
+const MyComputerWindow = dynamic(() => import("@/components/windows/MyComputerWindow"),{ ssr: false });
+const SecretsWindow    = dynamic(() => import("@/components/windows/SecretsWindow"),   { ssr: false });
+const ResumeWindow     = dynamic(() => import("@/components/windows/ResumeWindow"),    { ssr: false });
+const RecycleBinWindow = dynamic(() => import("@/components/windows/RecycleBinWindow"),{ ssr: false });
+const NotepadWindow    = dynamic(() => import("@/components/windows/NotepadWindow"),   { ssr: false });
+const MatrixRain       = dynamic(() => import("@/components/effects/MatrixRain"),      { ssr: false });
+const BSOD             = dynamic(() => import("@/components/effects/BSOD"),            { ssr: false });
+const MobileOverlay    = dynamic(() => import("@/components/effects/MobileOverlay"),   { ssr: false });
+
+const KONAMI = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+
+// Windows opened so far — for the "open all windows" achievement
+const ACHIEVEMENT_WINDOWS = new Set<string>();
 
 interface Props {
   onShutdown: () => void;
@@ -40,52 +50,27 @@ export default function Desktop({ onShutdown }: Props) {
     maximizeWindow,
     focusWindow,
     updatePosition,
+    updateSize,
   } = useWindowManager();
 
   const { notifications, addNotification, removeNotification } = useNotifications();
+  const { play } = useSound();
+  const { unlock } = useAchievements();
 
-  const [matrixMode, setMatrixMode] = useState(false);
-  const [showBSOD, setShowBSOD] = useState(false);
-  const [crtEnabled, setCrtEnabled] = useState(false);
-  const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
-  const [konamiIndex, setKonamiIndex] = useState(0);
+  const [matrixMode, setMatrixMode]     = useState(false);
+  const [showBSOD, setShowBSOD]         = useState(false);
+  const [crtEnabled, setCrtEnabled]     = useState(false);
+  const [contextMenu, setContextMenu]   = useState<{ x: number; y: number } | null>(null);
+  const konamiIndexRef                  = useRef(0);
 
-  // Sorted by z-index for rendering
   const sortedWindows = Object.values(windows).sort((a, b) => a.zIndex - b.zIndex);
   const activeWindowId = sortedWindows.filter((w) => w.isOpen && !w.isMinimized).at(-1)?.id;
 
-  // Konami code listener
+  // First boot achievement
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === KONAMI_CODE[konamiIndex]) {
-        const next = konamiIndex + 1;
-        if (next === KONAMI_CODE.length) {
-          setKonamiIndex(0);
-          addNotification({
-            title: "🥚 KONAMI CODE!",
-            message: "Achievement unlocked: Secret Agent! +9999 XP added.",
-            icon: "🎮",
-          });
-          setTimeout(() => setShowBSOD(true), 1000);
-          setTimeout(() => setShowBSOD(false), 5000);
-        } else {
-          setKonamiIndex(next);
-        }
-      } else {
-        setKonamiIndex(0);
-      }
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
+    unlock("first_boot");
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [konamiIndex, addNotification]);
-
-  // Shutdown event
-  useEffect(() => {
-    const handler = () => onShutdown();
-    document.addEventListener("shutdown", handler);
-    return () => document.removeEventListener("shutdown", handler);
-  }, [onShutdown]);
+  }, []);
 
   // Welcome notification
   useEffect(() => {
@@ -99,96 +84,170 @@ export default function Desktop({ onShutdown }: Props) {
     return () => clearTimeout(t);
   }, [addNotification]);
 
+  // Konami code listener — uses ref to avoid closure/dependency issues
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const key = e.key;
+      if (key === KONAMI[konamiIndexRef.current]) {
+        konamiIndexRef.current += 1;
+        if (konamiIndexRef.current === KONAMI.length) {
+          konamiIndexRef.current = 0;
+          const ach = unlock("konami_code");
+          addNotification({
+            title: ach ? "🎮 KONAMI CODE! Achievement Unlocked!" : "🎮 KONAMI CODE!",
+            message: ach
+              ? `Achievement: "${ach.title}" (+${ach.xp} XP)`
+              : "You already earned this one. Still cool though.",
+            icon: "🏆",
+          });
+          setTimeout(() => setShowBSOD(true),  800);
+          setTimeout(() => setShowBSOD(false), 5500);
+        }
+      } else {
+        konamiIndexRef.current = key === KONAMI[0] ? 1 : 0;
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [unlock, addNotification]);
+
+  // Keyboard shortcuts: Escape closes active window, Alt+F4 closes active
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if ((e.key === "Escape" || (e.key === "F4" && e.altKey)) && activeWindowId) {
+        e.preventDefault();
+        closeWindow(activeWindowId);
+        play("close");
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [activeWindowId, closeWindow, play]);
+
+  // Shutdown custom event
+  useEffect(() => {
+    const handler = () => onShutdown();
+    document.addEventListener("shutdown", handler);
+    return () => document.removeEventListener("shutdown", handler);
+  }, [onShutdown]);
+
+  // Track achievement for CRT enable
+  const handleToggleCRT = useCallback(() => {
+    setCrtEnabled((v) => {
+      if (!v) unlock("crt_enabled");
+      return !v;
+    });
+  }, [unlock]);
+
+  // Window open — with sound + achievement tracking
+  const handleOpenWindow = useCallback((id: WindowId) => {
+    openWindow(id);
+    play("open");
+
+    ACHIEVEMENT_WINDOWS.add(id);
+
+    const appAchMap: Partial<Record<WindowId, string>> = {
+      terminal:   "open_terminal",
+      about:      "open_about",
+      projects:   "open_projects",
+      secrets:    "open_secrets",
+      music:      "music_player",
+    };
+    const achId = appAchMap[id];
+    if (achId) {
+      const ach = unlock(achId);
+      if (ach) {
+        setTimeout(() => {
+          addNotification({
+            title: `🏆 Achievement Unlocked!`,
+            message: `"${ach.title}" — ${ach.description} (+${ach.xp} XP)`,
+            icon: ach.icon,
+          });
+        }, 500);
+      }
+    }
+
+    // All windows achievement
+    const ALL_WINDOW_IDS: WindowId[] = ["about","projects","contact","socials","reviews","terminal","music","mycomputer","resume","secrets","recycle","notepad"];
+    if (ALL_WINDOW_IDS.every((wid) => ACHIEVEMENT_WINDOWS.has(wid))) {
+      const ach = unlock("all_windows");
+      if (ach) {
+        setTimeout(() => {
+          addNotification({
+            title: "🏆 LEGENDARY Achievement!",
+            message: `"${ach.title}" — You opened every app! (+${ach.xp} XP)`,
+            icon: "🪟",
+          });
+        }, 800);
+      }
+    }
+  }, [openWindow, play, unlock, addNotification]);
+
+  const handleCloseWindow = useCallback((id: WindowId) => {
+    closeWindow(id);
+    play("close");
+  }, [closeWindow, play]);
+
+  const handleMinimizeWindow = useCallback((id: WindowId) => {
+    minimizeWindow(id);
+    play("minimize");
+  }, [minimizeWindow, play]);
+
+  const handleAchievementUnlock = useCallback((id: string) => {
+    const ach = unlock(id);
+    if (ach) {
+      addNotification({
+        title: "🏆 Achievement Unlocked!",
+        message: `"${ach.title}" (+${ach.xp} XP)`,
+        icon: ach.icon,
+      });
+    }
+  }, [unlock, addNotification]);
+
   const handleRightClick = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     setContextMenu({ x: e.clientX, y: e.clientY });
   }, []);
 
+  const handleMatrixMode = useCallback(() => {
+    setMatrixMode(true);
+    const ach = unlock("matrix_mode");
+    if (ach) {
+      addNotification({
+        title: "🏆 Achievement Unlocked!",
+        message: `"${ach.title}" — You took the red pill! (+${ach.xp} XP)`,
+        icon: ach.icon,
+      });
+    }
+  }, [unlock, addNotification]);
+
+  const handleBSOD = useCallback(() => {
+    setShowBSOD(true);
+    const ach = unlock("bsod_triggered");
+    if (ach) {
+      addNotification({
+        title: "🏆 Achievement Unlocked!",
+        message: `"${ach.title}" — You triggered the BSOD! (+${ach.xp} XP)`,
+        icon: ach.icon,
+      });
+    }
+  }, [unlock, addNotification]);
+
   const renderWindowContent = (id: WindowId) => {
     switch (id) {
-      case "about":
-        return <AboutWindow />;
-      case "projects":
-        return <ProjectsWindow />;
-      case "contact":
-        return <ContactWindow />;
-      case "socials":
-        return <SocialsWindow />;
-      case "reviews":
-        return <ReviewsWindow />;
-      case "terminal":
-        return <TerminalWindow onMatrixMode={() => setMatrixMode(true)} />;
-      case "music":
-        return <MusicWindow />;
-      case "mycomputer":
-        return <MyComputerWindow onOpenWindow={openWindow} />;
-      case "secrets":
-        return <SecretsWindow />;
-      case "resume":
-        return <ResumeWindow />;
-      case "recycle":
-        return (
-          <div className="p-6 text-center space-y-3">
-            <div className="text-6xl">🗑️</div>
-            <div className="font-bold text-gray-700">Recycle Bin</div>
-            <div className="text-gray-500 text-sm">
-              This folder is empty.
-              <br />
-              <span className="text-xs text-gray-400">
-                Hero.X deleted all bugs. Permanently.
-              </span>
-            </div>
-            <div
-              className="p-3 rounded font-mono text-xs text-left"
-              style={{ background: "#1a1a2e", color: "#00FF41", border: "1px solid #3A6EA5" }}
-            >
-              {"> rm -rf ./bugs"}<br />
-              {"> rm -rf ./errors"}<br />
-              {"> rm -rf ./problems"}<br />
-              {"Done. 0 items remaining."}
-            </div>
-          </div>
-        );
-      case "ie":
-        return <SocialsWindow />;
-      case "notepad":
-        return (
-          <div className="flex flex-col h-full">
-            <div
-              className="flex gap-4 px-3 py-1 text-xs border-b"
-              style={{ background: "#ECE9D8", borderColor: "#a0a0a0" }}
-            >
-              {["File", "Edit", "Format", "View", "Help"].map((m) => (
-                <button key={m} className="hover:bg-blue-600 hover:text-white px-1.5 py-0.5 rounded">
-                  {m}
-                </button>
-              ))}
-            </div>
-            <textarea
-              className="flex-1 p-3 text-xs resize-none outline-none"
-              style={{ fontFamily: "Courier New, monospace", background: "white" }}
-              defaultValue={`README.txt — Hero.X Portfolio OS
-
-This isn't your average portfolio.
-It's an experience. An OS. A world.
-
-Built with:
-- Next.js 15
-- Framer Motion
-- TypeScript
-- Tailwind CSS
-- Unhealthy amounts of coffee
-
-Hidden secrets: 13 total
-Easter eggs: Check the terminal
-
-Secret command: type 'matrix' in terminal
-Another secret: Konami Code works here
-
-— Hero.X, 2024`}
-            />
-          </div>
-        );
+      case "about":      return <AboutWindow />;
+      case "projects":   return <ProjectsWindow />;
+      case "contact":    return <ContactWindow />;
+      case "socials":    return <SocialsWindow />;
+      case "reviews":    return <ReviewsWindow />;
+      case "terminal":   return <TerminalWindow onMatrixMode={() => setMatrixMode(true)} onAchievementUnlock={handleAchievementUnlock} />;
+      case "music":      return <MusicWindow />;
+      case "mycomputer": return <MyComputerWindow onOpenWindow={handleOpenWindow} />;
+      case "secrets":    return <SecretsWindow />;
+      case "resume":     return <ResumeWindow />;
+      case "recycle":    return <RecycleBinWindow />;
+      case "notepad":    return <NotepadWindow />;
+      case "ie":         return <SocialsWindow />;
       default:
         return (
           <div className="flex items-center justify-center h-full text-gray-500 text-sm">
@@ -204,73 +263,85 @@ Another secret: Konami Code works here
       onContextMenu={handleRightClick}
       onClick={() => setContextMenu(null)}
     >
-      {/* Wallpaper */}
       <Wallpaper />
-
-      {/* Desktop Icons */}
-      <DesktopIcons onOpenWindow={openWindow} />
+      <DesktopIcons onOpenWindow={handleOpenWindow} />
 
       {/* Windows */}
       {sortedWindows.map((win) => (
         <Window
           key={win.id}
           window={win}
-          onClose={closeWindow}
-          onMinimize={minimizeWindow}
+          onClose={handleCloseWindow}
+          onMinimize={handleMinimizeWindow}
           onMaximize={maximizeWindow}
           onFocus={focusWindow}
           onPositionChange={updatePosition}
+          onSizeChange={updateSize}
           isActive={win.id === activeWindowId}
         >
           {renderWindowContent(win.id)}
         </Window>
       ))}
 
-      {/* Taskbar */}
       <Taskbar
         taskbarWindows={taskbarWindows}
-        onOpenWindow={openWindow}
+        onOpenWindow={handleOpenWindow}
         onFocusWindow={focusWindow}
-        onMinimizeWindow={minimizeWindow}
+        onMinimizeWindow={handleMinimizeWindow}
         activeWindowId={activeWindowId}
       />
 
-      {/* Notifications */}
       <Notifications notifications={notifications} onRemove={removeNotification} />
 
-      {/* Matrix Rain Overlay */}
       <AnimatePresence>
         {matrixMode && <MatrixRain onClose={() => setMatrixMode(false)} />}
       </AnimatePresence>
 
-      {/* BSOD */}
       <AnimatePresence>
         {showBSOD && <BSOD onClose={() => setShowBSOD(false)} />}
       </AnimatePresence>
 
-      {/* Right-click menu */}
       <AnimatePresence>
         {contextMenu && (
           <DesktopRightClick
             x={contextMenu.x}
             y={contextMenu.y}
             onClose={() => setContextMenu(null)}
-            onOpenWindow={openWindow}
-            onMatrixMode={() => setMatrixMode(true)}
-            onBSOD={() => setShowBSOD(true)}
-            onToggleCRT={() => setCrtEnabled(!crtEnabled)}
+            onOpenWindow={handleOpenWindow}
+            onMatrixMode={handleMatrixMode}
+            onBSOD={handleBSOD}
+            onToggleCRT={handleToggleCRT}
             crtEnabled={crtEnabled}
           />
         )}
       </AnimatePresence>
 
-      {/* Mobile overlay */}
       <MobileOverlay />
 
-      {/* CRT scan line */}
       {crtEnabled && (
-        <div className="scan-line pointer-events-none z-[9998]" style={{ zIndex: 9998 }} />
+        <div className="scan-line pointer-events-none" style={{ zIndex: 9998 }} />
       )}
+
+      {/* Keyboard shortcut hint — shows briefly */}
+      <div
+        className="fixed bottom-12 left-1/2 -translate-x-1/2 pointer-events-none"
+        style={{ zIndex: 35 }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          transition={{ delay: 3, duration: 0.5 }}
+        >
+          <motion.div
+            animate={{ opacity: [1, 1, 0] }}
+            transition={{ duration: 6, delay: 3, times: [0, 0.8, 1] }}
+            className="text-xs text-white/30 font-mono text-center"
+          >
+            [Esc] close window · [Tab] terminal autocomplete · Right-click for OS menu
+          </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 }

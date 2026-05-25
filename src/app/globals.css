@@ -386,3 +386,59 @@ html, body {
   z-index: 9998;
   pointer-events: none;
 }
+
+/* Shimmer effect for loading bars */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* Cursor blink for raw CSS usage (also in tailwind.config.ts) */
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Rain fall for .rain-drop class */
+@keyframes rainFall {
+  0% { transform: translateY(-100px); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Scan line for .scan-line class */
+@keyframes scanLine {
+  0% { top: -4px; }
+  100% { top: 100%; }
+}
+
+/* Float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Glow pulse */
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .scan-line,
+  .rain-drop,
+  .glitch-text::before,
+  .glitch-text::after {
+    display: none;
+  }
+}
