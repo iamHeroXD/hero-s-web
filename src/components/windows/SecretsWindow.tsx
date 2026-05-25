@@ -117,11 +117,7 @@ export default function SecretsWindow() {
   };
 
   const handleFileOpen = (file: (typeof SECRET_FILES)[0]) => {
-    if (!file.locked || unlocked.includes(file.name)) {
-      setSelectedFile(file);
-    } else {
-      setSelectedFile(file);
-    }
+    setSelectedFile(file);
   };
 
   const handleUnlock = () => {

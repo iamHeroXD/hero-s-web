@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     title: "Hero.X — Interactive Portfolio OS",
     description:
       "A portfolio that's actually an OS. Drag windows. Hack the terminal. Experience the future.",
-    creator: "@HeroXDev",
+    creator: "@herox_dev",
     images: ["/og-image.png"],
   },
   robots: {

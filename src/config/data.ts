@@ -404,11 +404,12 @@ LOCALE  : ${typeof navigator !== "undefined" ? navigator.language : "??"}
 
   tree: `C:\\Users\\Hero.X\\Desktop
 ├── Projects\\
-│   ├── HustleHub.exe
-│   ├── TurfMacha.exe
-│   ├── DiscordBots.exe
-│   ├── RobloxProjects.exe
-│   └── Experimental.exe
+│   ├── HustleHub.exe           [● LIVE]
+│   ├── MrQuaxkers.exe          [✓ DONE]
+│   ├── NotScriptedPro.exe      [✓ DONE]
+│   ├── Paco.exe                [✓ DONE]
+│   ├── RobuxCalculator.exe     [● LIVE]
+│   └── MarketplaceBot.exe      [● LIVE]
 ├── Secret_Files\\
 │   ├── [LOCKED] unreleased_projects.exe
 │   ├── secret_level_1.txt
@@ -421,7 +422,7 @@ LOCALE  : ${typeof navigator !== "undefined" ? navigator.language : "??"}
 ├── README.md
 └── resume.pdf
 
-5 directories, 13 files`,
+5 directories, 14 files`,
 
   fortune: () => {
     const quotes = [

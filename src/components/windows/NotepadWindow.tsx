@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const DEFAULT_CONTENT = `README.txt — Hero.X Portfolio OS
 ════════════════════════════════════════
@@ -35,12 +35,19 @@ TERMINAL COMMANDS:
   sudo, whoami, ls, cat, history
 
 ════════════════════════════════════════
-— Hero.X, 2025
+— Hero.X, 2026
   github.com/iamHeroXD
-  discord: herox.dev`;
+  discord: x.hero_dev`;
 
 export default function NotepadWindow() {
   const [content, setContent] = useState(DEFAULT_CONTENT);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("herox-notepad");
+      if (saved) setContent(saved);
+    } catch {}
+  }, []);
   const [saved, setSaved] = useState(true);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

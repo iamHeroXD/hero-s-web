@@ -62,13 +62,27 @@ export default function Desktop({ onShutdown }: Props) {
   const [crtEnabled, setCrtEnabled]     = useState(false);
   const [contextMenu, setContextMenu]   = useState<{ x: number; y: number } | null>(null);
   const konamiIndexRef                  = useRef(0);
+  const windowOpenTimestamps            = useRef<number[]>([]);
 
   const sortedWindows = Object.values(windows).sort((a, b) => a.zIndex - b.zIndex);
   const activeWindowId = sortedWindows.filter((w) => w.isOpen && !w.isMinimized).at(-1)?.id;
 
-  // First boot achievement
+  // First boot + Night Owl achievements
   useEffect(() => {
     unlock("first_boot");
+    const hour = new Date().getHours();
+    if (hour >= 0 && hour < 5) {
+      const ach = unlock("night_owl");
+      if (ach) {
+        setTimeout(() => {
+          addNotification({
+            title: "🦉 Achievement Unlocked!",
+            message: `"${ach.title}" — Browsing portfolios at this hour? Respect. (+${ach.xp} XP)`,
+            icon: ach.icon,
+          });
+        }, 3000);
+      }
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -145,6 +159,22 @@ export default function Desktop({ onShutdown }: Props) {
     play("open");
 
     ACHIEVEMENT_WINDOWS.add(id);
+
+    // Speed Runner: 5 windows opened within 10 seconds
+    const now = Date.now();
+    windowOpenTimestamps.current = [...windowOpenTimestamps.current, now].filter((t) => now - t <= 10000);
+    if (windowOpenTimestamps.current.length >= 5) {
+      const ach = unlock("speed_runner");
+      if (ach) {
+        setTimeout(() => {
+          addNotification({
+            title: "⚡ Achievement Unlocked!",
+            message: `"${ach.title}" — 5 windows in 10 seconds. You move fast. (+${ach.xp} XP)`,
+            icon: ach.icon,
+          });
+        }, 500);
+      }
+    }
 
     const appAchMap: Partial<Record<WindowId, string>> = {
       terminal:   "open_terminal",

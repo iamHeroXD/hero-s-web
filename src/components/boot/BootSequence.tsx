@@ -102,7 +102,7 @@ export default function BootSequence({ onComplete }: Props) {
             className="w-full h-full p-8 overflow-hidden font-mono text-sm"
           >
             <div className="text-green-400 mb-4 text-lg">
-              HERO.X BIOS v1.337 — Copyright © 2024 Hero.X Systems Inc.
+              HERO.X BIOS v1.337 — Copyright © 2026 Hero.X Systems Inc.
             </div>
             <div className="space-y-1">
               {biosLines.filter((l): l is string => typeof l === "string").map((line, i) => (

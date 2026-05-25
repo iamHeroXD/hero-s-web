@@ -54,8 +54,12 @@ export default function DesktopIcons({ onOpenWindow }: Props) {
 
   return (
     <>
-      {/* Icons grid - positioned on left side */}
-      <div className="absolute top-4 left-4 grid gap-4" style={{ gridTemplateColumns: "80px", gridAutoRows: "80px" }}>
+      {/* Icons grid - positioned on left side, 2 columns so all fit on screen */}
+      <div
+        className="absolute top-4 left-4 grid gap-3"
+        style={{ gridTemplateColumns: "80px 80px", gridAutoRows: "80px" }}
+        onClick={() => setSelectedIcon(null)}
+      >
         {DESKTOP_ICONS.map((icon, i) => (
           <motion.div
             key={icon.id}
@@ -64,7 +68,7 @@ export default function DesktopIcons({ onOpenWindow }: Props) {
             transition={{ delay: 0.1 + i * 0.05, type: "spring", stiffness: 300, damping: 20 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setSelectedIcon(icon.id)}
+            onClick={(e) => { e.stopPropagation(); setSelectedIcon(icon.id); }}
             onDoubleClick={() => handleDoubleClick(icon.id)}
             onContextMenu={(e) => handleContextMenu(e, icon.id)}
             className="flex flex-col items-center gap-1 cursor-pointer rounded p-1 select-none"

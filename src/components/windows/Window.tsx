@@ -235,7 +235,7 @@ export default function Window({
             </div>
 
             {/* Window content */}
-            <div className="flex-1 overflow-auto" style={{ background: "#ECE9D8" }}>
+            <div className="flex-1 overflow-hidden" style={{ background: "#ECE9D8" }}>
               {children}
             </div>
 

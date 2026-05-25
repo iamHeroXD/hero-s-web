@@ -261,11 +261,11 @@ export default function AboutWindow() {
             className="space-y-4"
           >
             {[
-              { year: "2020", title: "First Line of Code", desc: "Started with HTML/CSS. Made the ugliest website ever. Thought I was a genius.", icon: "🌱", color: "#00A82C" },
-              { year: "2021", title: "Roblox Dev Era", desc: "Discovered Lua and Roblox Studio. Built my first game with 100+ plays. Got hooked.", icon: "🎮", color: "#FF4444" },
-              { year: "2022", title: "JavaScript Unlocked", desc: "Learned JS and built my first Discord bots. 5 servers became 50 servers fast.", icon: "⚡", color: "#F7DF1E" },
-              { year: "2023", title: "React + Next.js", desc: "Leveled up to modern web development. Built real client projects. Went full-stack.", icon: "⚛️", color: "#61DAFB" },
-              { year: "2024", title: "Elite Mode", desc: "Full-stack developer. UI designer. Bot developer. Currently building the impossible.", icon: "🚀", color: "#7B2FFF" },
+              { year: "2022", title: "First Line of Code", desc: "Started with HTML/CSS. Made the ugliest website ever. Thought I was a genius.", icon: "🌱", color: "#00A82C" },
+              { year: "2023", title: "Roblox + Discord Era", desc: "Discovered Lua, Roblox Studio, and Discord.js. Built first bots — 5 servers became 50 fast.", icon: "🎮", color: "#FF4444" },
+              { year: "2024", title: "JavaScript Mastered", desc: "Leveled up JS skills. Built real client portfolios and web tools. Shipped 40+ sites.", icon: "⚡", color: "#F7DF1E" },
+              { year: "2025", title: "React + Next.js", desc: "Leveled up to modern web development. Built full-stack projects. Added React and Next.js to the stack.", icon: "⚛️", color: "#61DAFB" },
+              { year: "2026", title: "Elite Mode", desc: "Front-end developer. UI designer. Bot developer. Building the impossible — like this OS.", icon: "🚀", color: "#7B2FFF" },
             ].map((item, i) => (
               <motion.div
                 key={item.year}
